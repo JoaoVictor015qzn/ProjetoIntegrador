@@ -16,7 +16,7 @@ const Login = () => {
       {/* Lado esquerdo */}
       <div className="login-left">
         <img
-          src="/assets/walk.jpeg"
+          src="/assets/walk-logo.jpeg"
           alt="Logo Walk"
         />
         </div>
