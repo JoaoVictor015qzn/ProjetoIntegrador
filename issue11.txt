@@ -1,0 +1,23 @@
+Tarefa 11
+
+
+Front-end
+
+Criar formulário de login com campos: email e senha  ()
+
+Conectar formulário ao endpoint /login ()
+
+Exibir mensagem de erro se credenciais forem inválidas ()
+
+Redirecionar usuário para a página inicial após login bem-sucedido ()
+
+Armazenar token de autenticação (localStorage/sessionStorage) ()
+
+
+Integração
+
+Testar fluxo completo de login (front + back) ()
+
+Garantir que usuário autenticado consiga acessar áreas restritas ()
+
+Garantir que usuário não autenticado seja bloqueado em áreas privadas ()
