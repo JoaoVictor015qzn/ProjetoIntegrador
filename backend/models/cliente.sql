@@ -1,0 +1,10 @@
+CREATE TABLE Cliente (
+    id SERIAL PRIMARY KEY,
+    nome_cliente VARCHAR(100) NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    ativo BOOLEAN DEFAULT TRUE,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo VARCHAR(30)
+);
