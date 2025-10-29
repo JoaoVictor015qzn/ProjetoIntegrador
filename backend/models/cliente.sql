@@ -1,10 +1,20 @@
 CREATE TABLE Cliente (
     id SERIAL PRIMARY KEY,
     nome_cliente VARCHAR(100) NOT NULL,
-    email VARCHAR(120) UNIQUE NOT NULL,
-    senha VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha VARCHAR(100) NOT NULL,
     telefone VARCHAR(20),
     ativo BOOLEAN DEFAULT TRUE,
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    tipo VARCHAR(30)
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Pessoa_Fisica (
+    id INTEGER PRIMARY KEY REFERENCES Cliente(id)
+    cpf CHAR(11) UNIQUE NOT NULL
+);
+
+CREATE TABLE Pessoa_Juridica (
+    id INTEGER PRIMARY KEY REFERENCES Cliente(id),
+    cnpj CHAR(14) UNIQUE NOT NULL,
+    razao_social VARCHAR(150)
 );
