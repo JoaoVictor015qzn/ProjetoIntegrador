@@ -6,5 +6,5 @@ CREATE TABLE Produtos (
     status BOOLEAN DEFAULT TRUE,
     imagem_principal TEXT,
     quantidade_estoque INT DEFAULT 0,
-    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

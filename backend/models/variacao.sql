@@ -6,5 +6,5 @@ CREATE TABLE Variacao (
     condicao_estado VARCHAR(50),
     genero VARCHAR(50),
     faixa_etaria VARCHAR(50),
-    preco NUMERIC(10,2),
+    preco NUMERIC(10,2)
 );

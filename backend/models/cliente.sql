@@ -9,12 +9,12 @@ CREATE TABLE Cliente (
 );
 
 CREATE TABLE Pessoa_Fisica (
-    id INTEGER PRIMARY KEY REFERENCES Cliente(id)
-    cpf CHAR(11) UNIQUE NOT NULL
+    id INTEGER PRIMARY KEY REFERENCES Cliente(id),
+    cpf CHARACTER(11) UNIQUE NOT NULL
 );
 
 CREATE TABLE Pessoa_Juridica (
     id INTEGER PRIMARY KEY REFERENCES Cliente(id),
-    cnpj CHAR(14) UNIQUE NOT NULL,
+    cnpj CHARACTER(14) UNIQUE NOT NULL,
     razao_social VARCHAR(150)
 );

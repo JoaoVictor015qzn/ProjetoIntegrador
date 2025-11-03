@@ -3,5 +3,5 @@ CREATE TABLE Imagem_Produto (
     produto_id INTEGER REFERENCES Produtos(id),
     variacao_id INTEGER REFERENCES Variacao(id),
     url TEXT NOT NULL,
-    principal BOOLEAN DEFAULT FALSE,
+    principal BOOLEAN DEFAULT FALSE
 );

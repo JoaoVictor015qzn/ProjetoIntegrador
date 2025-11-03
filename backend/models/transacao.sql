@@ -4,5 +4,5 @@ CREATE TABLE Transacao (
     metodo_pagamento VARCHAR(50),
     valor_pago NUMERIC(10,2),
     parcelas INT,
-    data_pagamento TIMESTAMP,
+    data_pagamento TIMESTAMP
 );
