@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.9"
 
 services:
   postgres:
@@ -24,5 +24,27 @@ services:
     depends_on:
       - postgres
 
+  chatbot:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chatbot_openai
+    env_file:
+      - ./backend/WalkWord.ChatBot/.env
+    stdin_open: true
+    tty: true
+
+  python:
+    image: python:3.13-slim
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: python chatbot.py
+    depends_on:
+      - postgres
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+
 volumes:
-  polls_pg_data: 
+  polls_pg_data:
+    name: projetointegrador_polls_pg_data
