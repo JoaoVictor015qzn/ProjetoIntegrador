@@ -6,7 +6,7 @@ CREATE TABLE Pedidos (
     subtotal_total NUMERIC(10,2),
     valor_desconto NUMERIC(10,2),
     data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    tipo VARCHAR(30),
+    tipo VARCHAR(30)
 );    
 
 

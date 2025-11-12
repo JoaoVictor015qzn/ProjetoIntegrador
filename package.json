@@ -1,0 +1,29 @@
+{
+  "name": "projetointegrador",
+  "version": "1.0.0",
+  "description": "Desenvolver uma aplicacao web para a loja WalkWord, especializada na venda de roupas novas e seminovas, com foco em moda sustentavel. A plataforma integrara tecnologias modernas como IA, Big Data, Frontend, Backend, Engenharia de Software e Redes para oferecer uma experiencia de compra personalizada, segura e eficiente.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaoVictor015qzn/ProjetoIntegrador.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JoaoVictor015qzn/ProjetoIntegrador/issues"
+  },
+  "homepage": "https://github.com/JoaoVictor015qzn/ProjetoIntegrador#readme",
+  "dependencies": {
+    "openai": "^6.7.0",
+    "react": "^19.2.0",
+    "python": "^3.13.7"
+  }
+}
