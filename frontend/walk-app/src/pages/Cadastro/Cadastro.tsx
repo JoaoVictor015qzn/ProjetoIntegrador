@@ -1,39 +1,38 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./Cadastro.css";
 import Walk from "../../assets/Walk.png";
 
 function Cadastro() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  const togglePassword = () => setShowPassword(!showPassword);
+  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <>
       <nav>
         <img src={Walk} alt="Logo" />
-        <span>Roupas sustentavéis e com melhor qualidade!</span>
+        <span>Roupas sustentáveis e com melhor qualidade!</span>
       </nav>
+
       <div className="container">
         <form>
           <h1>Cadastro</h1>
-          {/* Campos nome e sobrenome */}
+
+          {/* Nome e Sobrenome */}
           <div className="name-group">
             <input placeholder="Nome" name="nome" type="text" />
             <input placeholder="Sobrenome" name="sobrenome" type="text" />
           </div>
 
-          {/* Campo email */}
-          <input placeholder="Email" name="email" type="text" />
+          {/* Email */}
+          <input placeholder="Email" name="email" type="email" />
 
-          {/* Campo senha */}
+          {/* Senha */}
           <div className="password-wrapper">
             <input
               placeholder="Senha"
@@ -45,7 +44,7 @@ function Cadastro() {
             </button>
           </div>
 
-          {/* Campo confirmar senha */}
+          {/* Confirmar Senha */}
           <div className="password-wrapper">
             <input
               placeholder="Confirmar Senha"
@@ -61,9 +60,16 @@ function Cadastro() {
             </button>
           </div>
 
+          {/* Botões */}
           <button type="button">Criar Conta</button>
-          <button type="button">Voltar para Login</button>
-          {/* <Link to="/Cadastro_CNPJ"></Link> */}
+
+          <button type="button" onClick={() => navigate("/")}>
+            Voltar para Login
+          </button>
+
+          <button type="button" onClick={() => navigate("/cadastro-cnpj")}>
+            Cadastrar como Empresa
+          </button>
         </form>
       </div>
     </>

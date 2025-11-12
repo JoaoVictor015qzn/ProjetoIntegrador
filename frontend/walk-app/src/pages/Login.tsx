@@ -10,6 +10,7 @@ const Login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log({ userType, email, password });
+    
   };
 
   return (
@@ -28,7 +29,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <h1>Acesse com seu login ou cadastre-se!</h1>
 
-          <select value={userType} onChange={(e) => setUserType(e.target.value)}>
+          <select className="flex text-black" value={userType} onChange={(e) => setUserType(e.target.value)}>
             <option>Pessoa Jurídica</option>
             <option>Pessoa Física</option>
           </select>
@@ -39,6 +40,7 @@ const Login = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="flex text-black"
           />
 
           <input
@@ -47,14 +49,14 @@ const Login = () => {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="flex text-black"
           />
 
             <Link to="/recover-password" className="forgot">Esqueceu a senha?</Link>
-
           <button type="submit">Entrar</button>
 
-          <p className="signup-link">
-            Não possui conta? <a href="#">Criar conta</a>
+          <p className="signup-link text-black">
+            Não possui conta? <a href="/Cadastro">Criar conta</a>
           </p>
         </form>
       </div>
