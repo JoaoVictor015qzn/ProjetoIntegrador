@@ -1,32 +1,31 @@
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./Cnpj.css";
 import Walk from "../../assets/Walk.png";
 
 function CNPJ() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPassword = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
+  const togglePassword = () => setShowPassword(!showPassword);
+  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <>
       <nav>
         <img src={Walk} alt="Logo" />
-        <span>Roupas sustentavéis e com melhor qualidade!</span>
+        <span>Roupas sustentáveis e com melhor qualidade!</span>
       </nav>
+
       <div className="container">
         <form>
-          <h1>Cadastro </h1>
-          {/* Campos nome e CNPJ */}
+          <h1>Cadastro Empresa</h1>
+
+          {/* Nome Fantasia e CNPJ */}
           <div className="name-group">
-            <input placeholder="Nome fantasia" name="nomef" type="text" />
+            <input placeholder="Nome Fantasia" name="nomef" type="text" />
             <input
               placeholder="CNPJ"
               name="cnpj"
@@ -36,7 +35,7 @@ function CNPJ() {
             />
           </div>
 
-          {/* Campo Razão Social e IE*/}
+          {/* Razão Social e IE */}
           <div className="razao-group">
             <input placeholder="Razão Social" name="razaos" type="text" />
             <div className="ie-box">
@@ -47,10 +46,11 @@ function CNPJ() {
               </div>
             </div>
           </div>
-          {/* Campo email */}
-          <input placeholder="Email" name="email" type="text" />
 
-          {/* Campo senha */}
+          {/* Email */}
+          <input placeholder="Email" name="email" type="email" />
+
+          {/* Senha */}
           <div className="password-wrapper">
             <input
               placeholder="Senha"
@@ -62,7 +62,7 @@ function CNPJ() {
             </button>
           </div>
 
-          {/* Campo confirmar senha */}
+          {/* Confirmar Senha */}
           <div className="password-wrapper">
             <input
               placeholder="Confirmar Senha"
@@ -78,9 +78,16 @@ function CNPJ() {
             </button>
           </div>
 
+          {/* Botões */}
           <button type="button">Criar Conta</button>
-          <button type="button">Voltar para Login</button>
-          {/* <Link to="/Cadastro_CNPJ"></Link> */}
+
+          <button type="button" onClick={() => navigate("/")}>
+            Voltar para Login
+          </button>
+
+          <button type="button" onClick={() => navigate("/cadastro")}>
+            Cadastrar como Pessoa Física
+          </button>
         </form>
       </div>
     </>

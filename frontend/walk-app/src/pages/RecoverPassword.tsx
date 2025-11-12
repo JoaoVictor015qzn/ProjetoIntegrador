@@ -34,7 +34,7 @@ const RecoverPassword = () => {
 
           <button type="submit">Enviar link</button>
 
-          <Link to="/login" className="back-link">
+          <Link to="/" className="back-link">
             Voltar para o login
           </Link>
         </form>
