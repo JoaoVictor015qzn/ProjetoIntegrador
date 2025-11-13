@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: bitnami/postgresql:latest
+    container_name: postgres_server
+    restart: always
+    ports: 
+      - '5432:5432'  # expõe o Postgres pra rede local
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=polls
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - polls_pg_data:/bitnami/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_server
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"  # acessar pelo navegador: http://172.31.80.1:5050
+    depends_on:
+      - postgres
+
+  chatbot:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: chatbot_openai
+    env_file:
+      - ./backend/WalkWord.ChatBot/.env
+    stdin_open: true
+    tty: true
+
+  python:
+    image: python:3.13-slim
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: python chatbot.py
+    depends_on:
+      - postgres
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+
+volumes:
+  polls_pg_data:
+    name: projetointegrador_polls_pg_data
