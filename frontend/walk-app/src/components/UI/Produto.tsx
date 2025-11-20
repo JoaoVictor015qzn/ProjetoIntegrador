@@ -1,4 +1,17 @@
-const products = [
+// src/components/UI/ProductGrid.tsx (atualizado para adicionar ao carrinho/favoritos e abrir modal)
+import { useState } from 'react';
+import { useCart } from '../../context/useCart';
+import { useFavorites } from '../../context/useFavorites';
+import ProductDetailsModal from '../UI/Modal';  // Corrija o import se necessário (era '../../components/UI/Modal' no erro, mas deve ser o caminho correto para ProductDetailsModal)
+
+interface Product {
+  id: number;
+  nome: string;
+  preco: number;
+  imagem: string;
+}
+
+const products: Product[] = [
   {
     id: 1,
     nome: "Vestido curto estampado vintage",
@@ -58,6 +71,18 @@ const products = [
 ];
 
 const ProductGrid = () => {
+  const { addToCart } = useCart();
+  const { addToFavorites } = useFavorites();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const openModal = (item: Product) => {  // Adicione tipo para 'item'
+    setSelectedProduct(item);
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+  };
+
   return (
     <section className="bg-white py-10">
       <h2 className="text-center text-3xl font-extrabold text-black bg-black text-white py-3 tracking-wide">
@@ -72,16 +97,32 @@ const ProductGrid = () => {
             <img
               src={item.imagem}
               alt={item.nome}
-              className="rounded-md w-48 h-64 object-cover"
+              className="rounded-md w-48 h-64 object-cover cursor-pointer"
+              onClick={() => openModal(item)}  // Clique para modal
             />
             <p className="text-sm mt-2 text-center">{item.nome}</p>
             <p className="text-sm font-semibold">
               R${item.preco.toFixed(2)}{" "}
               <span className="text-gray-500">(5% OFF no Pix)</span>
             </p>
+            <div className="flex gap-2 mt-2">
+              <button
+                onClick={() => addToCart(item)}
+                className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-sm"
+              >
+                Carrinho
+              </button>
+              <button
+                onClick={() => addToFavorites(item)}
+                className="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600 text-sm"
+              >
+                Favoritar
+              </button>
+            </div>
           </div>
         ))}
       </div>
+      {selectedProduct && <ProductDetailsModal product={selectedProduct} onClose={closeModal} />}
     </section>
   );
 };
