@@ -1,0 +1,189 @@
+/* --- LAYOUT GERAL --- */
+.main-content-enderecos {
+  flex: 1;
+  padding: 10px;
+  margin-left: 40px !important;
+}
+
+.endereco-header {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.endereco-header h2 {
+  margin: 0;
+  font-weight: 750;
+  font-size: 23px;
+}
+
+.add-btn {
+  background-color: #221e1e;
+  color: #fff;
+  border: none;
+  margin-top: 10px !important;
+  margin-right: 40px;
+  padding: 9px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.nenhum-endereco {
+  font-size: 15px;
+  color: #414040;
+}
+
+/* --- CARD DE ENDEREÇO (NOVO LAYOUT) --- */
+.endereco-card {
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+  /* Flexbox para separar esquerda e direita */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Lado Esquerdo: Informações */
+.endereco-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.endereco-top {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.separador {
+  color: #ccc;
+  margin: 0 5px;
+}
+
+.endereco-detalhes p {
+  margin: 2px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Lado Direito: Ações */
+.endereco-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Alinha tudo à direita */
+  gap: 15px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 15px;
+}
+
+.editar {
+  color: #0077ff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.excluir {
+  background: none;
+  border: none;
+  color: #b33e3e;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.padrao-btn {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.padrao-btn:hover {
+  background-color: #f9f9f9;
+  border-color: #ccc;
+}
+
+/* --- MODAL (RECUPERADO) --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que fique acima de tudo */
+}
+
+.modal {
+  background: white;
+  width: 600px;
+  padding: 25px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.form-grid input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%; /* Garante preenchimento */
+  box-sizing: border-box; /* Garante que o padding não estoure o tamanho */
+}
+
+.modal-actions {
+  margin-top: 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  align-items: center;
+}
+
+.cancelar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.enviar {
+  background-color: #221e1e;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
