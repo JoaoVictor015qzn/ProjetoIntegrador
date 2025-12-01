@@ -2,7 +2,6 @@
 .main-content-cartoes {
   flex: 1;
   padding: 50px;
-  background-color: #f9f9f9;
   padding-left: 50px !important;
 }
 
@@ -100,7 +99,7 @@
   border-radius: 10px;
   width: 250px;
   color: white;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .card-header {
@@ -132,4 +131,51 @@
   color: #ff1a1a;
   transform: scale(1.1);
   transition: 0.2s;
+}
+
+@media (max-width: 768px) {
+  .main-content-cartoes {
+    padding: 20px !important;
+    padding-left: 20px !important;
+  }
+
+  .header-cartao {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-cartao button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal {
+    width: 95% !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-row {
+    flex-direction: column;
+  }
+
+  .modal-row input {
+    width: 100%;
+  }
+
+  .cards-list {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .card-box {
+    width: 100%;
+  }
+
+  .delete-btn {
+    left: 0;
+    align-self: flex-end;
+    margin-top: -5px;
+  }
 }

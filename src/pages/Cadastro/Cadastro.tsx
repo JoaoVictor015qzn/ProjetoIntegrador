@@ -7,10 +7,48 @@ import Walk from "../../assets/Walk.png";
 function Cadastro() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [form, setForm] = useState({
+    nome: "",
+    sobrenome: "",
+    email: "",
+    senha: "",
+    confirmasenha: "",
+  });
+
   const navigate = useNavigate();
 
   const togglePassword = () => setShowPassword(!showPassword);
-  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const toggleConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  // 🔥 Mesmas validações do outro código
+  const senhaValida = form.senha.length >= 6;
+  const senhasIguais = form.senha === form.confirmasenha;
+
+  const criarConta = () => {
+    if (!form.nome || !form.sobrenome || !form.email) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    if (!senhaValida) {
+      alert("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+
+    if (!senhasIguais) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    alert("Conta criada com sucesso!");
+    navigate("/");
+  };
 
   return (
     <>
@@ -20,36 +58,73 @@ function Cadastro() {
       </nav>
 
       <div className="container">
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <h1>Cadastro</h1>
 
           {/* Nome e Sobrenome */}
           <div className="name-group">
-            <input placeholder="Nome" name="nome" type="text" />
-            <input placeholder="Sobrenome" name="sobrenome" type="text" />
+            <input
+              placeholder="Nome"
+              name="nome"
+              type="text"
+              value={form.nome}
+              onChange={handleChange}
+            />
+            <input
+              placeholder="Sobrenome"
+              name="sobrenome"
+              type="text"
+              value={form.sobrenome}
+              onChange={handleChange}
+            />
           </div>
 
           {/* Email */}
-          <input placeholder="Email" name="email" type="email" />
+          <input
+            placeholder="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+          />
 
-          {/* Senha */}
+          {/* ---------------------- SENHA ---------------------- */}
           <div className="password-wrapper">
             <input
               placeholder="Senha"
               name="senha"
               type={showPassword ? "text" : "password"}
+              value={form.senha}
+              onChange={handleChange}
+              className={
+                !senhaValida && form.senha.length > 0 ? "erro-input" : ""
+              }
             />
             <button type="button" className="eye-btn" onClick={togglePassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
 
-          {/* Confirmar Senha */}
+          {/* Texto igual ao outro arquivo */}
+          {form.senha.length > 0 && !senhaValida && (
+            <p className="erro-texto">
+              A senha deve ter pelo menos 6 caracteres.
+            </p>
+          )}
+
+          {/* ------------------ CONFIRMAR SENHA ------------------ */}
           <div className="password-wrapper">
             <input
               placeholder="Confirmar Senha"
               name="confirmasenha"
               type={showConfirmPassword ? "text" : "password"}
+              value={form.confirmasenha}
+              onChange={handleChange}
+              className={
+                form.confirmasenha.length > 0 && !senhasIguais
+                  ? "erro-input"
+                  : ""
+              }
             />
             <button
               type="button"
@@ -60,8 +135,14 @@ function Cadastro() {
             </button>
           </div>
 
+          {form.confirmasenha.length > 0 && !senhasIguais && (
+            <p className="erro-texto">As senhas não coincidem.</p>
+          )}
+
           {/* Botões */}
-          <button type="button">Criar Conta</button>
+          <button type="button" onClick={criarConta}>
+            Criar Conta
+          </button>
 
           <button type="button" onClick={() => navigate("/")}>
             Voltar para Login

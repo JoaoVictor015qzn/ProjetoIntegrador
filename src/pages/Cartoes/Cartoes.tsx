@@ -20,14 +20,17 @@ function Cartoes() {
     nome: "",
   });
 
-  // Lista de cartões salvos localmente
   const [cartoes, setCartoes] = useState<CardFormState[]>([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement> | { name: string; value: string }
+  ) => {
+    const name = "target" in e ? e.target.name : e.name;
+    const value = "target" in e ? e.target.value : e.value;
+
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -58,19 +61,15 @@ function Cartoes() {
         <div className="main-content-cartoes">
           <div className="header-cartao">
             <h2>Cartão De Crédito</h2>
-            <button onClick={handleOpen}>
-              + Adicionar Cartão De Crédito
-            </button>
+            <button onClick={handleOpen}>+ Adicionar Cartão De Crédito</button>
           </div>
 
-          {/* Se não tiver cartões */}
           {cartoes.length === 0 && (
             <p className="nenhum-cartao">
               Você ainda não tem cartões cadastrados.
             </p>
           )}
 
-          {/* Lista de cartões */}
           <div className="cards-list">
             {cartoes.map((c, index) => (
               <div key={index} className="card-box">
@@ -81,10 +80,10 @@ function Cartoes() {
                 <p>**** **** **** {c.numero.slice(-4)}</p>
                 <p>Validade: {c.validade}</p>
 
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(index)}
-                  />
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(index)}
+                />
               </div>
             ))}
           </div>
@@ -92,10 +91,7 @@ function Cartoes() {
           {/* MODAL */}
           {open && (
             <div className="modal-overlay" onClick={handleClose}>
-              <div
-                className="modal"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <h3>Informações do Cartão</h3>
 
                 <div className="modal-row">
@@ -103,8 +99,12 @@ function Cartoes() {
                     name="numero"
                     placeholder="Número do Cartão"
                     type="text"
+                    maxLength={16}
                     value={form.numero}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const onlyNums = e.target.value.replace(/\D/g, "");
+                      handleChange({ name: "numero", value: onlyNums });
+                    }}
                   />
                 </div>
 
@@ -113,14 +113,26 @@ function Cartoes() {
                     name="validade"
                     placeholder="Data de Validade (MM/AA)"
                     value={form.validade}
-                    onChange={handleChange}
+                    maxLength={5}
+                    onChange={(e) => {
+                      let v = e.target.value.replace(/\D/g, "");
+                      if (v.length > 2) {
+                        v = v.slice(0, 2) + "/" + v.slice(2, 4);
+                      }
+                      handleChange({ name: "validade", value: v });
+                    }}
                   />
+
                   <input
                     name="cvv"
                     placeholder="CVV"
-                    type="number"
+                    type="text"
+                    maxLength={3}
                     value={form.cvv}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      const onlyNums = e.target.value.replace(/\D/g, "");
+                      handleChange({ name: "cvv", value: onlyNums });
+                    }}
                   />
                 </div>
 

@@ -9,7 +9,7 @@
 
 .main-content-wrapper {
   flex: 1;
-  margin-left: 0px !important; /* Empurra main pra direita */
+  margin-left: 0px !important; 
   justify-content: flex-start;
   margin-top: -50px;
   padding-left: 0px !important;
@@ -23,7 +23,7 @@ form {
   box-shadow: none;
   padding: 0;
   border: none;
-  flex: 1; /* Faz o form ocupar todo o espaço disponível */
+  flex: 1;
 }
 
 h1.page-title {
@@ -71,27 +71,44 @@ h1.page-title {
   border-color: #000;
 }
 
-/* ================= BOTÃO EXCLUIR CONTA ================= */
-.excluir-conta {
-  width: 100%;
-  display: flex;
-  justify-content: center; /* Centraliza o botão */
-  margin-top: 30px;
+/* ================= BOTÃO SALVAR ================= */
+.save-btn {
+  width: 250px;         
+  padding: 10px ;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto 0;     
+  display: block;
+  transition: 0.2s;
+  background-color: #31353c;
 }
 
+.save-btn:hover {
+  background-color: #3b3e46;
+}
+
+.saved-msg {
+  margin-top: 10px;
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ================= BOTÃO EXCLUIR CONTA ================= */
 .excluir-conta {
-  width: 100%;
-  display: flex;
-  justify-content: center; /* centraliza o botão */
+  text-align: center;
   margin-top: 30px;
 }
 
 .excluir-conta button {
+  width: 250px;
   background-color: rgb(163, 6, 6);
   color: white;
   padding: 10px 28px;
   border-radius: 10px;
-  text-align: center;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -116,7 +133,7 @@ h1.page-title {
 
 .modal-box {
   background: #fff;
-  padding: 24px;
+  padding: 22px;
   border-radius: 10px;
   width: 340px;
   text-align: center;
@@ -161,15 +178,15 @@ h1.page-title {
 
 .radios {
   display: flex;
-  gap: 100px; /* Espaço entre as opções */
+  gap: 100px; 
   align-items: center;
   flex: 1;
 }
 
 .radios .radio-option {
-  width: auto !important; /* Remove a largura fixa de 180px */
-  text-align: left !important; /* Remove o alinhamento à direita */
-  font-weight: 500 !important; /* Remove o negrito */
+  width: auto !important; 
+  text-align: left !important; 
+  font-weight: 500 !important;
   margin: 0 !important;
   display: flex;
   align-items: center;
@@ -183,6 +200,7 @@ h1.page-title {
   height: 16px;
   cursor: pointer;
 }
+
 
 /* ================= SEÇÃO PERFIL ================= */
 .perfil-container {
@@ -237,4 +255,97 @@ h1.page-title {
 
 .select-photo-btn:hover {
   background-color: #e7e7e7;
+}
+
+/* ====================== RESPONSIVIDADE ====================== */
+@media (max-width: 768px) {
+
+  .perfil-container {
+    flex-direction: column !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    gap: 10px !important;
+    padding: 0 16px !important;
+  }
+
+  .main-content-wrapper {
+    padding-right: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* FORM EM COLUNA */
+  .field {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .field label {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  .field input {
+    width: 100% !important;
+  }
+
+  /* RADIOS */
+  .radios {
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .radio-option {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  /* FOTO */
+  .profile-photo-section {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 10px !important;
+  }
+
+  .profile-photo-wrapper {
+    width: 140px !important;
+    height: 140px !important;
+  }
+}
+
+/* MOBILE AJUSTE REAL */
+@media (max-width: 768px) {
+  .main-content-wrapper {
+    padding-right: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .perfil-container {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+  }
+
+  form {
+    width: 100% !important;
+  }
+
+  .field {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .field label {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  .profile-photo-section {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
 }

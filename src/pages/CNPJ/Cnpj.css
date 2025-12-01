@@ -179,3 +179,21 @@ form input:focus {
   outline: none !important;
   filter: none !important;
 }
+
+.input-error {
+  border: 2px solid red !important;
+}
+
+/* Mensagens de erro */
+
+.error-text {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: red;
+}
+
+.disabled-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

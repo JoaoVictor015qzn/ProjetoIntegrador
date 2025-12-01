@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Navbar from "../../components/UI/Navbar";
 import Sidebar from "../../components/UI/Sidebar";
 import "./Entregas.css";
@@ -6,7 +6,7 @@ import "./Entregas.css";
 interface Pedido {
   id: number;
   loja: string;
-  status: string; 
+  status: string;
   img: string;
   titulo: string;
   variacao: string;
@@ -14,12 +14,19 @@ interface Pedido {
   preco: number;
 }
 
-const tabs = ["Tudo", "A Pagar", "Preparando", "A caminho", "Finalizado", "Cancelado"];
+const tabs = [
+  "Tudo",
+  "A Pagar",
+  "Preparando",
+  "A caminho",
+  "Finalizado",
+  "Cancelado",
+];
 
 function Entregas() {
   const [activeTab, setActiveTab] = useState("Tudo");
-  
-  const [pedidos, setPedidos] = useState<Pedido[]>([]); 
+
+  const [pedidos] = useState<Pedido[]>([]);
 
   const pedidosFiltrados = pedidos.filter((pedido) => {
     if (activeTab === "Tudo") return true;
@@ -27,7 +34,7 @@ function Entregas() {
   });
 
   // *************************************************************************
-  // INSERIR A CHAMADA DA API DO BACK-END 
+  // INSERIR A CHAMADA DA API DO BACK-END
   // Usar o useEffect para buscar os dados e chamar setPedidos(dadosReais)
   // *************************************************************************
 
@@ -36,9 +43,8 @@ function Entregas() {
       <Navbar />
       <div className="app-layout">
         <Sidebar />
-        
+
         <div className="main-content-entregas">
-          
           {/* TAB BAR */}
           <div className="tabs-container">
             {tabs.map((tab) => (
@@ -59,7 +65,6 @@ function Entregas() {
             ) : (
               pedidosFiltrados.map((pedido) => (
                 <div key={pedido.id} className="pedido-card">
-                  
                   <div className="card-header">
                     <div className="loja-info">
                       <span className="tag-indicado">Indicado</span>
@@ -69,38 +74,43 @@ function Entregas() {
                     </div>
                     <div className="status-entrega">
                       <span>Pedido entregue</span>
-                      <span className="status-texto">{pedido.status.toUpperCase()}</span>
+                      <span className="status-texto">
+                        {pedido.status.toUpperCase()}
+                      </span>
                     </div>
                   </div>
 
                   <div className="card-body">
                     {/* Imagem (trocar src pela URL real) */}
-                    <img src={pedido.img} alt={pedido.titulo} /> 
+                    <img src={pedido.img} alt={pedido.titulo} />
                     <div className="prod-detalhes">
                       <h3>{pedido.titulo}</h3>
                       <p>Variação: {pedido.variacao}</p>
                       <p>x{pedido.qtd}</p>
                     </div>
                     <div className="prod-preco">
-                      R${pedido.preco.toFixed(2).replace('.', ',')}
+                      R${pedido.preco.toFixed(2).replace(".", ",")}
                     </div>
                   </div>
 
                   <div className="card-footer">
                     <div className="total-label">
-                      Total do Pedido: <span>R${pedido.preco.toFixed(2).replace('.', ',')}</span>
+                      Total do Pedido:{" "}
+                      <span>R${pedido.preco.toFixed(2).replace(".", ",")}</span>
                     </div>
                     <div className="card-actions">
-                      <button className="comprar-novamente">Comprar Novamente</button>
-                      <button className="falar-vendedor">Falar Com Vendedor</button>
+                      <button className="comprar-novamente">
+                        Comprar Novamente
+                      </button>
+                      <button className="falar-vendedor">
+                        Falar Com Vendedor
+                      </button>
                     </div>
                   </div>
-
                 </div>
               ))
             )}
           </div>
-
         </div>
       </div>
     </>

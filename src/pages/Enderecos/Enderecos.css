@@ -187,3 +187,57 @@
   font-weight: bold;
   font-size: 14px;
 }
+
+/* ======== RESPONSIVO MOBILE ======== */
+@media (max-width: 768px) {
+
+  .main-content-enderecos {
+    margin-left: 0 !important;
+    padding: 10px !important;
+  }
+
+  .endereco-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .add-btn {
+    margin-right: 0 !important;
+    width: 100%;
+    text-align: center;
+  }
+
+  .endereco-card {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .endereco-info {
+    width: 100%;
+  }
+
+  .endereco-actions {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .btn-group {
+    gap: 10px;
+  }
+
+  .modal {
+    width: 95% !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .enviar {
+    width: 100%;
+    text-align: center;
+  }
+}

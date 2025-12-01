@@ -142,3 +142,15 @@ form input:focus {
   outline: none !important;
   filter: none !important;
 }
+
+/* Mensagens de erro */
+.erro-input {
+  border: 2px solid red !important;
+}
+
+.erro-texto {
+  color: red;
+  margin-top: -5px;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+}

@@ -4,8 +4,57 @@ import Sidebar from "../../components/UI/Sidebar";
 import "./Config.css";
 
 function Config() {
-  const [showCpf] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+
+  const [nomeUsuario, setNomeUsuario] = useState("");
+
+  const [cpf, setCpf] = useState("");
+
+  // --- FOTO ---
+  const [fotoPreview, setFotoPreview] = useState<string>(
+    "https://cdn-icons-png.flaticon.com/512/847/847969.png"
+  );
+  const [fotoArquivo, setFotoArquivo] = useState<File | null>(null);
+
+  function handleFotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setFotoArquivo(file); // arquivo real para enviar
+    setFotoPreview(URL.createObjectURL(file)); // preview imediato
+  }
+
+  // --- SALVAR ---
+  function handleSave(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    if (fotoArquivo) {
+      formData.append("foto", fotoArquivo);
+    }
+
+    console.log("Foto enviada para o backend:", fotoArquivo);
+
+    alert("Alterações salvas com sucesso!");
+  }
+
+  function formatarCPF(valor: string) {
+    valor = valor.replace(/\D/g, "");
+    valor = valor.slice(0, 11);
+
+    if (valor.length > 9) {
+      return valor.replace(
+        /(\d{3})(\d{3})(\d{3})(\d{1,2})/,
+        "$1.$2.$3-$4"
+      );
+    } else if (valor.length > 6) {
+      return valor.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+    } else if (valor.length > 3) {
+      return valor.replace(/(\d{3})(\d{1,3})/, "$1.$2");
+    }
+
+    return valor;
+  }
 
   return (
     <>
@@ -18,12 +67,19 @@ function Config() {
           <div className="container">
             <div className="perfil-container">
               {/* Formulário */}
-              <form>
+              <form onSubmit={handleSave}>
                 <h1 className="page-title"> Meu Perfil </h1>
+
                 <div className="perfil">
                   <div className="field">
                     <label>Nome de Usuário:</label>
-                    <input name="nomeUsuario" type="text" />
+                    <input
+                      name="nomeUsuario"
+                      type="text"
+                      maxLength={15}
+                      value={nomeUsuario}
+                      onChange={(e) => setNomeUsuario(e.target.value)}
+                    />
                   </div>
 
                   <div className="field">
@@ -60,10 +116,23 @@ function Config() {
                       </label>
                     </div>
                   </div>
+
                   <div className="field">
                     <label>CPF:</label>
-                    <input name="cpf" type={showCpf ? "text" : "password"} />
+                    <input
+                      name="cpf"
+                      type="text"
+                      value={cpf}
+                      onChange={(e) => setCpf(formatarCPF(e.target.value))}
+                    />
                   </div>
+
+                  {/* Botão de salvar */}
+                  <button className="save-btn" type="submit">
+                    Salvar alterações
+                  </button>
+
+                  {/* Botão excluir conta */}
                   <div className="excluir-conta">
                     <button type="button" onClick={() => setOpenModal(true)}>
                       Excluir Minha Conta
@@ -72,6 +141,7 @@ function Config() {
                 </div>
               </form>
 
+              {/* Modal */}
               {openModal && (
                 <div className="modal-overlay">
                   <div className="modal-box">
@@ -104,7 +174,7 @@ function Config() {
               <div className="profile-photo-section">
                 <div className="profile-photo-wrapper">
                   <img
-                    src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                    src={fotoPreview}
                     alt="Foto do usuário"
                     className="profile-photo"
                   />
@@ -112,7 +182,12 @@ function Config() {
 
                 <label className="select-photo-btn">
                   Selecionar imagem
-                  <input type="file" accept="image/*" hidden />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={handleFotoChange}
+                  />
                 </label>
               </div>
             </div>

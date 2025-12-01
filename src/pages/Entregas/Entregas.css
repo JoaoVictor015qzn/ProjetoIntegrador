@@ -1,8 +1,8 @@
 .main-content-entregas {
   flex: 1;
-  background-color: #f5f5f5; 
+  background-color: #f5f5f5;
   min-height: 100vh;
-  margin-left: 40px; 
+  margin-left: 40px;
 }
 
 .tabs-container {
@@ -25,7 +25,7 @@
 }
 
 .tab-btn:hover {
-  color: #221e1e; 
+  color: #221e1e;
 }
 
 .tab-btn.active {
@@ -51,7 +51,7 @@
 .pedido-card {
   background: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
   padding: 20px;
 }
@@ -80,7 +80,8 @@
   border-radius: 2px;
 }
 
-.chat-btn, .loja-btn {
+.chat-btn,
+.loja-btn {
   border: 1px solid #ddd;
   background: #fff;
   font-size: 12px;
@@ -145,7 +146,7 @@
   align-items: flex-end;
   flex-direction: column;
   gap: 15px;
-  border-top: 1px solid #f5f5f5; 
+  border-top: 1px solid #f5f5f5;
   padding-top: 15px;
 }
 
@@ -183,5 +184,62 @@
   cursor: pointer;
 }
 
-.comprar-novamente:hover { background: #221e1e; }
-.falar-vendedor:hover { background: #f8f8f8; }
+.comprar-novamente:hover {
+  background: #221e1e;
+}
+.falar-vendedor:hover {
+  background: #f8f8f8;
+}
+
+/* ============================ RESPONSIVIDADE  ================================= */
+@media (max-width: 480px) {
+  .main-content-entregas {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .pedidos-list {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .pedido-card {
+    padding: 15px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-body img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+  }
+
+  .prod-detalhes h3 {
+    font-size: 14px;
+  }
+
+  .card-footer {
+    align-items: flex-start;
+  }
+
+  .card-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .comprar-novamente,
+  .falar-vendedor {
+    width: 100%;
+    text-align: center;
+  }
+}

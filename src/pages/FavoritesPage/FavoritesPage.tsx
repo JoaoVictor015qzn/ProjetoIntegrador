@@ -1,16 +1,19 @@
 // src/pages/FavoritesPage/FavoritesPage.tsx (página completa de favoritos)
-import Navbar from '../../components/UI/Navbar';
-import { useFavorites } from '../../context/useFavorites';
-import { useState } from 'react';
-import ProductDetailsModal from '../../components/UI/Modal';  // Use o caminho correto (ajuste se for '../../components/UI/Modal')
+import Navbar from "../../components/UI/Navbar";
+import { useFavorites } from "../../context/useFavorites";
+import { useState } from "react";
+import ProductDetailsModal from "../../components/UI/Modal"; // Use o caminho correto (ajuste se for '../../components/UI/Modal')
 
-import type { FavoriteItem } from '../../context/FavoritesContext';  // Importe o tipo FavoriteItem se necessário (caso não esteja acessível)
+import type { FavoriteItem } from "../../context/FavoritesContext"; // Importe o tipo FavoriteItem se necessário (caso não esteja acessível)
 
 const FavoritesPage = () => {
   const { favorites, removeFromFavorites } = useFavorites();
-  const [selectedProduct, setSelectedProduct] = useState<FavoriteItem | null>(null);  // Adicione o tipo aqui: FavoriteItem | null
+  const [selectedProduct, setSelectedProduct] = useState<FavoriteItem | null>(
+    null
+  ); // Adicione o tipo aqui: FavoriteItem | null
 
-  const openModal = (item: typeof favorites[0]) => {  // Tipo já correto
+  const openModal = (item: (typeof favorites)[0]) => {
+    // Tipo já correto
     setSelectedProduct(item);
   };
 
@@ -24,7 +27,9 @@ const FavoritesPage = () => {
         <Navbar />
         <div className="p-8 text-center">
           <h1 className="text-3xl font-bold mb-4 text-black">Seus Favoritos</h1>
-          <p className="text-black">Você ainda não adicionou itens aos seus favoritos.</p>
+          <p className="text-black">
+            Você ainda não adicionou itens aos seus favoritos.
+          </p>
         </div>
       </div>
     );
@@ -46,12 +51,19 @@ const FavoritesPage = () => {
               />
               <p className="font-bold">{item.nome}</p>
               <p>R${item.preco.toFixed(2)}</p>
-              <button onClick={() => removeFromFavorites(item.id)} className="mt-2 text-red-500">Remover</button>
+              <button
+                onClick={() => removeFromFavorites(item.id)}
+                className="mt-2 text-red-500"
+              >
+                Remover
+              </button>
             </div>
           ))}
         </div>
       </div>
-      {selectedProduct && <ProductDetailsModal product={selectedProduct} onClose={closeModal} />}
+      {selectedProduct && (
+        <ProductDetailsModal product={selectedProduct} onClose={closeModal} />
+      )}
     </div>
   );
 };
