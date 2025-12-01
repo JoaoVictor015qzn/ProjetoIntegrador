@@ -5,7 +5,6 @@ import "./Config.css";
 
 function Config() {
   const [showCpf] = useState(false);
-
   const [openModal, setOpenModal] = useState(false);
 
   return (
