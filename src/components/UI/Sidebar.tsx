@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ChevronDown, User, ShoppingBag, Settings, Menu } from "lucide-react";
+import { ChevronDown, User, ShoppingBag, Settings, Menu, Store } from "lucide-react";
 import icon from "../../assets/icon.png";
 
 export default function Sidebar() {
@@ -151,6 +151,17 @@ export default function Sidebar() {
                 </li>
               </ul>
             )}
+          </div>
+
+          {/* MINHA LOJA */}
+          <div className="mt-2">
+            <Link
+              to="/loja"
+              className="flex items-center gap-3 text-gray-900 py-2 hover:bg-gray-50 rounded-md transition-colors"
+            >
+              <Store size={18} className="stroke-[2.5]" />
+              <span className="font-bold text-sm">Minha Loja</span>
+            </Link>
           </div>
 
           {/* CONFIGURAÇÕES */}

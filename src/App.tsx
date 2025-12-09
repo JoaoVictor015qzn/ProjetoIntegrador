@@ -12,6 +12,7 @@ import Config from "./pages/Config/Config";
 import Cartoes from "./pages/Cartoes/Cartoes";
 import Enderecos from "./pages/Enderecos/Enderecos";
 import Entregas from "./pages/Entregas/Entregas";
+import Loja from "./pages/Loja/Loja";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
       <Route path="/cartoes" element={<Cartoes />} />
       <Route path="/enderecos" element={<Enderecos />} />
       <Route path="/entregas" element={<Entregas />} />
+      <Route path="/loja" element={<Loja />} />
     </Routes>
   );
 }
