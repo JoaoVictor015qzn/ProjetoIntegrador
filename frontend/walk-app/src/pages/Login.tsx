@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./Login.css";
 
 const Login = () => {
-  const [userType, setUserType] = useState("Pessoa Jurídica/Física");
+  const [userType, setUserType] = useState("Pessoa Física");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -12,10 +12,14 @@ const Login = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     console.log({ userType, email, password });
 
-    // redireciona pra home ao clicar em "Entrar"
-    navigate("/home");
+    if (userType === "Pessoa Jurídica") {
+      navigate("/admin"); // PJ sempre vai pra área administrativa
+    } else {
+      navigate("/home"); // PF vai pra home
+    }
   };
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -33,7 +37,7 @@ const Login = () => {
           <h1>Acesse com seu login ou cadastre-se!</h1>
 
           <select
-            className="text-black"
+            className="text-black shadow-md rounded-md p-2"
             value={userType}
             onChange={(e) => setUserType(e.target.value)}
           >
@@ -50,7 +54,6 @@ const Login = () => {
             className="text-black"
           />
 
-          {/* Senha com ícone de olho */}
           <div className="password-wrapper">
             <input
               type={showPassword ? "text" : "password"}
@@ -60,6 +63,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="text-black"
             />
+
             <button
               type="button"
               className="eye-btn"
@@ -73,8 +77,9 @@ const Login = () => {
             Esqueceu a senha?
           </Link>
 
-          {/* Botão normal estilizado, mas com navegação programática */}
-          <button type="submit" className="login-btn flex items-center justify-center">Entrar</button>
+          <button type="submit" className="login-btn flex items-center justify-center">
+            Entrar
+          </button>
 
           <p className="signup-link text-black flex items-center justify-center">
             Não possui conta? <Link to="/Cadastro">Criar conta</Link>
