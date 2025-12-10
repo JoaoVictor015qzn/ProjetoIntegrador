@@ -18,7 +18,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex flex-wrap justify-between items-center px-8 py-4 gap-6">
-        <Link to="/home" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img
             src="/assets/walk-logo.jpeg"
             alt="Logo"
@@ -36,7 +36,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6 text-gray-700">
-          <Link to="/" title="Entrar">
+          <Link to="/login" title="Entrar">
             <User className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
 
@@ -48,7 +48,7 @@ export default function Navbar() {
             <ShoppingCart className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
 
-          <Link to="/" className="text-gray-700 hover:text-gray-600 font-medium">
+          <Link to="/login" className="text-gray-700 hover:text-gray-600 font-medium">
             Entrar
           </Link>
         </div>
