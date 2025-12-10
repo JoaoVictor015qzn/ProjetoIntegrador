@@ -47,7 +47,11 @@ const RecoverPassword = () => {
               Enviar link de recuperação
             </button>
 
+
+            <Link to="/" className="back-link">
+
             <Link to="/login" className="back-link">
+
               <ArrowLeft size={18} /> Voltar para o login
             </Link>
           </form>
@@ -65,6 +69,7 @@ const RecoverPassword = () => {
               Não recebeu? Verifique a pasta de spam ou tente novamente.
             </p>
 
+            <Link to="/" className="success-btn">
             <Link to="/login" className="success-btn">
               Voltar para o login
             </Link>
