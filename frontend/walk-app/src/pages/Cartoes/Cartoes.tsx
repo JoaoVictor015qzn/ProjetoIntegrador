@@ -1,6 +1,8 @@
+// src/pages/Cartoes/Cartoes.tsx
 import Navbar from "../../components/UI/Navbar";
 import Sidebar from "../../components/UI/Sidebar";
 import React, { useState } from "react";
+import { FaTrash } from "react-icons/fa";
 import "./Cartoes.css";
 
 interface CardFormState {
@@ -75,15 +77,16 @@ function Cartoes() {
               <div key={index} className="card-box">
                 <div className="card-header">
                   <h4>{c.nome}</h4>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(index)}
+                  >
+                    <FaTrash size={18} color="#ff4d4d" />
+                  </button>
                 </div>
 
                 <p>**** **** **** {c.numero.slice(-4)}</p>
                 <p>Validade: {c.validade}</p>
-
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(index)}
-                />
               </div>
             ))}
           </div>

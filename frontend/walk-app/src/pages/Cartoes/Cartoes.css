@@ -100,6 +100,7 @@
   width: 250px;
   color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .card-header {
@@ -110,27 +111,18 @@
 
 /* Botão de deletar */
 .delete-btn {
-  width: 15px;
-  height: 20px;
-  border: none;
+  position: absolute;
+  bottom: 15px; 
+  right: 15px;
   background: transparent;
+  border: none;
   cursor: pointer;
-  position: relative;
-  left: 200px;
-}
-
-.delete-btn::before {
-  content: "\f1f8";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  font-size: 18px;
-  color: #ff4d4d;
-}
-
-.delete-btn:hover::before {
-  color: #ff1a1a;
-  transform: scale(1.1);
-  transition: 0.2s;
+  width: 24px; 
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 @media (max-width: 768px) {

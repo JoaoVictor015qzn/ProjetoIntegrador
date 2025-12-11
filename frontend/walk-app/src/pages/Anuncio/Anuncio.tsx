@@ -1,4 +1,5 @@
 import Walk from "../../assets/Walk.png";
+import { Link } from "react-router-dom";
 import "./Anuncio.css";
 import { useState } from "react";
 
@@ -7,7 +8,7 @@ function Anuncio() {
   const [erro, setErro] = useState("");
   const [modalTaxas, setModalTaxas] = useState(false);
   const comissao = 0.10;  
-  const tarifaFixa = 5.00; 
+  const tarifaFixa = 4.00; 
 
   const precoNum = Number(preco);
   const valorComissao = precoNum * comissao;
@@ -95,7 +96,9 @@ function Anuncio() {
   return (
     <>
       <nav className="anuncio-nav">
-        <img src={Walk} alt="Logo" />
+       <Link to="/home">
+         <img src={Walk} alt="Logo" className="logo" />
+       </Link>
         <span>Roupas sustentáveis e com melhor qualidade!</span>
       </nav>
 

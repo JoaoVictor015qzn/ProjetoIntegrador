@@ -79,7 +79,8 @@ function CNPJ() {
           </div>
 
           {/* Botões */}
-          <button type="button">Criar Conta</button>
+          <button type="button" onClick={() => navigate("/")}>
+            Criar Conta</button>
 
           <button type="button" onClick={() => navigate("/")}>
             Voltar para Login

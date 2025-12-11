@@ -9,8 +9,19 @@
 }
 
 .anuncio-nav img {
-  width: 50px;
+  width: 45px;   
+  height: auto;      
+  object-fit: contain; 
+  cursor: pointer;   
 }
+
+.anuncio-nav a {
+  display: flex;        
+  align-items: center; 
+  text-decoration: none;
+}
+
+
 
 /* ====== CONTAINER PRINCIPAL ====== */
 .anuncio-container {
