@@ -116,6 +116,18 @@ function Loja() {
           >
             Seguindo (0)
           </button>
+
+          <button
+            className="aba solicitar-relatorio"
+            onClick={() =>
+              alert(
+                "Solicitação de relatório enviada! Em breve a loja retornará pelo e-mail."
+              )
+            }
+          >
+            Solicitar relatório
+          </button>
+          
         </div>
         <div className="conteudo-aba">
           {abaAtiva === "venda" && (
