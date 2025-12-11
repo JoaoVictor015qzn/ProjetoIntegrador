@@ -1,7 +1,7 @@
 // src/components/UI/Navbar.tsx
-import { User, Heart, ShoppingCart } from "lucide-react";
+import { User, Heart, ShoppingCart, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useSearch } from "../../context/use.Search";  // <-- CORRETO
+import { useSearch } from "../../context/use.Search";
 
 export default function Navbar() {
   const { setSearchTerm } = useSearch();
@@ -18,7 +18,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex flex-wrap justify-between items-center px-8 py-4 gap-6">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/home" className="flex items-center gap-2">
           <img
             src="/assets/walk-logo.jpeg"
             alt="Logo"
@@ -36,8 +36,10 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6 text-gray-700">
-          <Link to="/login" title="Entrar">
-            <User className="cursor-pointer hover:text-green-600 w-6 h-6" />
+
+          {/* ÍCONE DE CONFIG NO LUGAR DO ANTIGO USER */}
+          <Link to="/config" title="Configurações">
+            <Settings className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
 
           <Link to="/favoritos" title="Favoritos">
@@ -48,8 +50,10 @@ export default function Navbar() {
             <ShoppingCart className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
 
-          <Link to="/login" className="text-gray-700 hover:text-gray-600 font-medium">
-            Entrar
+          
+          {/* ÍCONE DA PESSOINHA → LOGIN */}
+          <Link to="/" title="Entrar">
+            <User className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
         </div>
       </div>

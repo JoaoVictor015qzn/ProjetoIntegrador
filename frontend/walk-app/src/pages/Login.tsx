@@ -13,12 +13,10 @@ const Login = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log({ userType, email, password });
-
     if (userType === "Pessoa Jurídica") {
-      navigate("/admin"); // PJ sempre vai pra área administrativa
+      navigate("/admin");
     } else {
-      navigate("/home"); // PF vai pra home
+      navigate("/home");
     }
   };
 
@@ -26,18 +24,17 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {/* Lado esquerdo */}
+
       <div className="login-left">
         <img src="/assets/walk-logo.jpeg" alt="Logo Walk" />
       </div>
 
-      {/* Lado direito */}
       <div className="login-right">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login-form">
           <h1>Acesse com seu login ou cadastre-se!</h1>
 
           <select
-            className="text-black shadow-md rounded-md p-2"
+            className="input-field"
             value={userType}
             onChange={(e) => setUserType(e.target.value)}
           >
@@ -51,7 +48,7 @@ const Login = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="text-black"
+            className="input-field"
           />
 
           <div className="password-wrapper">
@@ -61,14 +58,10 @@ const Login = () => {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="text-black"
+              className="input-field"
             />
 
-            <button
-              type="button"
-              className="eye-btn"
-              onClick={togglePassword}
-            >
+            <button type="button" className="eye-btn flex items-center justify-center" onClick={togglePassword}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
@@ -77,11 +70,11 @@ const Login = () => {
             Esqueceu a senha?
           </Link>
 
-          <button type="submit" className="login-btn flex items-center justify-center">
+          <button type="submit" className="login-btn">
             Entrar
           </button>
 
-          <p className="signup-link text-black flex items-center justify-center">
+          <p className="signup-link">
             Não possui conta? <Link to="/Cadastro">Criar conta</Link>
           </p>
         </form>
