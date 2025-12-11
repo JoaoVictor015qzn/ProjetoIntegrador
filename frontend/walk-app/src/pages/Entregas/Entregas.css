@@ -1,0 +1,245 @@
+.main-content-entregas {
+  flex: 1;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  margin-left: 40px;
+}
+
+.tabs-container {
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 10px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 15px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover {
+  color: #221e1e;
+}
+
+.tab-btn.active {
+  color: #221e1e;
+  border-bottom: 2px solid #221e1e;
+  font-weight: 500;
+}
+
+/* --- LISTA DE PEDIDOS --- */
+.pedidos-list {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
+
+/* --- CARD DO PEDIDO --- */
+.pedido-card {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+/* Header do Card */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.loja-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.tag-indicado {
+  background: #221e1e;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.chat-btn,
+.loja-btn {
+  border: 1px solid #ddd;
+  background: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+.status-entrega {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #26aa99;
+}
+
+.status-texto {
+  color: #221e1e;
+  font-weight: bold;
+  border-left: 1px solid #ddd;
+  padding-left: 10px;
+}
+
+/* Body do Card */
+.card-body {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.card-body img {
+  width: 80px;
+  height: 80px;
+  border: 1px solid #f1f1f1;
+  object-fit: cover;
+}
+
+.prod-detalhes {
+  flex: 1;
+}
+
+.prod-detalhes h3 {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+  font-weight: 500;
+}
+
+.prod-detalhes p {
+  color: #888;
+  font-size: 13px;
+  margin: 2px 0;
+}
+
+.prod-preco {
+  color: #333;
+  font-size: 15px;
+}
+
+/* Footer do Card */
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 15px;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 15px;
+}
+
+.total-label {
+  font-size: 14px;
+}
+
+.total-label span {
+  color: #221e1e;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.comprar-novamente {
+  background: #221e1e;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.falar-vendedor {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comprar-novamente:hover {
+  background: #221e1e;
+}
+.falar-vendedor:hover {
+  background: #f8f8f8;
+}
+
+/* ============================ RESPONSIVIDADE  ================================= */
+@media (max-width: 480px) {
+  .main-content-entregas {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .pedidos-list {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .pedido-card {
+    padding: 15px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .card-body img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+  }
+
+  .prod-detalhes h3 {
+    font-size: 14px;
+  }
+
+  .card-footer {
+    align-items: flex-start;
+  }
+
+  .card-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .comprar-novamente,
+  .falar-vendedor {
+    width: 100%;
+    text-align: center;
+  }
+}
