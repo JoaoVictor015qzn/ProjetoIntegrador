@@ -14,7 +14,7 @@ const Login = () => {
     event.preventDefault();
 
     if (userType === "Pessoa Jurídica") {
-      navigate("/admin");
+      navigate("/loja");
     } else {
       navigate("/home");
     }
