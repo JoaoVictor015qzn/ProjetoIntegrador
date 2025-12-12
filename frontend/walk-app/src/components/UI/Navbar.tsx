@@ -1,10 +1,19 @@
 // src/components/UI/Navbar.tsx
-import { User, Heart, ShoppingCart } from "lucide-react";
+import { User, Heart, ShoppingCart, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useSearch } from "../../context/use.Search";  // <-- CORRETO
+import { useSearch } from "../../context/use.Search";
+import { useCart } from "../../context/useCart";
+import { useFavorites } from "../../context/useFavorites";
 
 export default function Navbar() {
   const { setSearchTerm } = useSearch();
+  const { cart } = useCart();
+  const { favorites } = useFavorites();
+
+  // Quantidade total no carrinho
+  const cartCount = cart.reduce((total, item) => total + item.quantidade, 0);
+  // Quantidade de favoritos
+  const favoritesCount = favorites.length;
 
   const handleScrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -18,11 +27,11 @@ export default function Navbar() {
       </div>
 
       <div className="flex flex-wrap justify-between items-center px-8 py-4 gap-6">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/home" className="flex items-center gap-2">
           <img
             src="/assets/walk-logo.jpeg"
             alt="Logo"
-            className="w-12 h-12 object-contain flex rounded-full"
+            className="w-12 h-12 object-contain rounded-full"
           />
         </Link>
 
@@ -36,20 +45,34 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6 text-gray-700">
-          <Link to="/login" title="Entrar">
-            <User className="cursor-pointer hover:text-green-600 w-6 h-6" />
+          {/* Configurações */}
+          <Link to="/config" title="Configurações">
+            <Settings className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
 
-          <Link to="/favoritos" title="Favoritos">
+          {/* Favoritos com bolinha vermelha + número */}
+          <Link to="/favoritos" title="Favoritos" className="relative inline-block">
             <Heart className="cursor-pointer hover:text-green-600 w-6 h-6" />
+            {favoritesCount > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full border-2 border-white">
+                {favoritesCount}
+              </span>
+            )}
           </Link>
 
-          <Link to="/carrinho" title="Carrinho">
+          {/* Carrinho com bolinha vermelha + número */}
+          <Link to="/carrinho" title="Carrinho" className="relative inline-block">
             <ShoppingCart className="cursor-pointer hover:text-green-600 w-6 h-6" />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-600 rounded-full border-2 border-white">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
-          <Link to="/login" className="text-gray-700 hover:text-gray-600 font-medium">
-            Entrar
+          {/* Login */}
+          <Link to="/" title="Entrar">
+            <User className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
         </div>
       </div>

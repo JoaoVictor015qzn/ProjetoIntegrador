@@ -1,4 +1,6 @@
-import { useState } from "react";
+// src/pages/Entregas.tsx
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "../../components/UI/Navbar";
 import Sidebar from "../../components/UI/Sidebar";
 import "./Entregas.css";
@@ -14,38 +16,37 @@ interface Pedido {
   preco: number;
 }
 
-const tabs = [
-  "Tudo",
-  "A Pagar",
-  "Preparando",
-  "A caminho",
-  "Finalizado",
-  "Cancelado",
-];
+const tabs = ["Tudo", "A Pagar", "Preparando", "A caminho", "Finalizado", "Cancelado"];
 
 function Entregas() {
   const [activeTab, setActiveTab] = useState("Tudo");
+  const [pedidos, setPedidos] = useState<Pedido[]>([]);
 
-  const [pedidos] = useState<Pedido[]>([]);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const pedidoId = query.get("pedido");
 
-  const pedidosFiltrados = pedidos.filter((pedido) => {
-    if (activeTab === "Tudo") return true;
-    return pedido.status === activeTab;
-  });
+  useEffect(() => {
+    // Mock
+    setPedidos([]);
+  }, []);
 
-  // *************************************************************************
-  // INSERIR A CHAMADA DA API DO BACK-END
-  // Usar o useEffect para buscar os dados e chamar setPedidos(dadosReais)
-  // *************************************************************************
+  useEffect(() => {
+    if (pedidoId && pedidos.length > 0) {
+      const id = Number(pedidoId);
+      const pedido = pedidos.find((p) => p.id === id);
+      if (pedido) setActiveTab(pedido.status);
+    }
+  }, [pedidoId, pedidos]);
+
+  const pedidosFiltrados = pedidos.filter((p) => activeTab === "Tudo" || p.status === activeTab);
 
   return (
     <>
       <Navbar />
       <div className="app-layout">
         <Sidebar />
-
         <div className="main-content-entregas">
-          {/* TAB BAR */}
           <div className="tabs-container">
             {tabs.map((tab) => (
               <button
@@ -58,13 +59,12 @@ function Entregas() {
             ))}
           </div>
 
-          {/* LISTA DE PEDIDOS */}
           <div className="pedidos-list">
             {pedidosFiltrados.length === 0 ? (
               <div className="empty-state">Nenhum pedido nesta aba.</div>
             ) : (
               pedidosFiltrados.map((pedido) => (
-                <div key={pedido.id} className="pedido-card">
+                <div key={pedido.id} className={`pedido-card ${pedido.id === Number(pedidoId) ? "highlight" : ""}`}>
                   <div className="card-header">
                     <div className="loja-info">
                       <span className="tag-indicado">Indicado</span>
@@ -73,15 +73,12 @@ function Entregas() {
                       <button className="loja-btn">Ver Loja</button>
                     </div>
                     <div className="status-entrega">
-                      <span>Pedido entregue</span>
-                      <span className="status-texto">
-                        {pedido.status.toUpperCase()}
-                      </span>
+                      <span>Status:</span>
+                      <span className="status-texto">{pedido.status.toUpperCase()}</span>
                     </div>
                   </div>
 
                   <div className="card-body">
-                    {/* Imagem (trocar src pela URL real) */}
                     <img src={pedido.img} alt={pedido.titulo} />
                     <div className="prod-detalhes">
                       <h3>{pedido.titulo}</h3>
@@ -95,16 +92,11 @@ function Entregas() {
 
                   <div className="card-footer">
                     <div className="total-label">
-                      Total do Pedido:{" "}
-                      <span>R${pedido.preco.toFixed(2).replace(".", ",")}</span>
+                      Total do Pedido: <span>R${pedido.preco.toFixed(2).replace(".", ",")}</span>
                     </div>
                     <div className="card-actions">
-                      <button className="comprar-novamente">
-                        Comprar Novamente
-                      </button>
-                      <button className="falar-vendedor">
-                        Falar Com Vendedor
-                      </button>
+                      <button className="comprar-novamente">Comprar Novamente</button>
+                      <button className="falar-vendedor">Falar Com Vendedor</button>
                     </div>
                   </div>
                 </div>

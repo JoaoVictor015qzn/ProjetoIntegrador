@@ -1,0 +1,208 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.payment-main {
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===== TÍTULO ===== */
+.payment-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 0 10px;
+}
+
+/* ===== CONTAINER GERAL ===== */
+.payment-container {
+  display: flex;
+  gap: 25px;
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+}
+
+/* ===== BOTÕES DE MÉTODOS ===== */
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 35%;
+  min-width: 200px;
+}
+
+.option-btn {
+  padding: 14px;
+  background: #eaeaea;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.option-btn:hover {
+  background: #dcdcdc;
+}
+
+.option-btn.active {
+  background: #4a90e2;
+  color: white;
+}
+
+/* ===== ÁREA PRINCIPAL (CONTEÚDO DO MÉTODO) ===== */
+.payment-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ===== FORM DE CARTÃO ===== */
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-form input {
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== PIX ===== */
+.pix-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  text-align: center;
+}
+
+.pix-qrcode {
+  width: 180px;
+  height: 180px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  object-fit: cover;
+}
+
+/* ===== TOTAL ===== */
+.total-area {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* ===== BOTÃO FINAL ===== */
+.finish-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.finish-btn:hover {
+  background: #3e8e41;
+}
+
+/* ===== MODAL DE LOADING ===== */
+.loading-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.loading-box {
+  background: white;
+  padding: 25px 35px;
+  border-radius: 14px;
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 900px) {
+  .payment-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .payment-options {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 10px;
+  }
+
+  .payment-options::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .payment-options::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 8px;
+  }
+
+  .option-btn {
+    flex: 1;
+    text-align: center;
+    min-width: 160px;
+  }
+}
+
+@media (max-width: 600px) {
+  .payment-title {
+    font-size: 22px;
+  }
+
+  .payment-container {
+    padding: 15px;
+  }
+
+  .pix-qrcode {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 400px) {
+  .option-btn {
+    min-width: 130px;
+    font-size: 14px;
+  }
+
+  .finish-btn {
+    font-size: 16px;
+  }
+}
