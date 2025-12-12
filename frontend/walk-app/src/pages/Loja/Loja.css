@@ -91,6 +91,32 @@
   font-weight: bold;
 }
 
+/* Inputs de Cidade e UF */
+.local-loja-inputs {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.input-local {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.input-local:focus {
+  border-color: #000;
+}
+
+.input-local.uf {
+  width: 70px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 /* Abas */
 .abas-loja {
   display: flex;

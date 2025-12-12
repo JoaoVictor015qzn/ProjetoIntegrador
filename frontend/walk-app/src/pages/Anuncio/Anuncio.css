@@ -116,6 +116,21 @@
   border-radius: 6px;
 }
 
+/* ==================== Tamanho e cor ==================== */
+.input-group-lado {
+  display: flex;
+  gap: 20px; 
+}
+
+.input-group-lado .input-group {
+  flex: 1; 
+}
+
+.input-group-lado .input-group select,
+.input-group-lado .input-group input {
+  width: 100%; 
+}
+
 /* ==================== LADO DIREITO ==================== */
 
 .infos-box {
@@ -407,55 +422,149 @@
 @media (max-width: 950px) {
   .form-anuncio {
     flex-direction: column;
+    gap: 25px;
   }
 
+  
   .fotos-box {
     width: 100%;
   }
 
   .foto-grid {
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
+    grid-auto-rows: 150px;
   }
 
   .foto-principal {
     grid-column: span 4;
+    height: 220px;
+  }
+
+  .foto-mini {
+    height: 140px;
+  }
+
+  .infos-box {
+    width: 100%;
+  }
+
+  .linha-dupla {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .input-group-lado {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .preco-group {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .anuncio-container {
+    padding: 0 15px;
+  }
+
+  .linha-seletor {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .estado-opcoes {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .foto-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .foto-principal {
+    grid-column: span 3;
+  }
+
+  .linha-dupla {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .anuncio-container h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .anuncio-container h2 {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .foto-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 140px;
+  }
+
+  .foto-principal {
+    grid-column: span 2;
     height: 200px;
   }
 
   .foto-mini {
     height: 120px;
   }
+
+  .input-group input,
+  .input-group textarea,
+  .input-group select {
+    font-size: 15px;
+    padding: 14px;
+  }
+
+  .marca-group .marca-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .estado-opcoes {
+    gap: 12px;
+  }
+
+  .preco-box input {
+    height: 46px;
+  }
+
+  .btn-enviar {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    margin-bottom: 50px;
+  }
+
+  .modal {
+    width: 95%;
+    padding: 18px;
+  }
 }
 
-@media (max-width: 600px) {
-  .anuncio-container h1 {
-    font-size: 22px;
-  }
-
-  .anuncio-container h2 {
-    font-size: 16px;
-  }
+@media (max-width: 400px) {
 
   .foto-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    grid-auto-rows: 180px;
   }
 
   .foto-principal {
-    grid-column: span 2;
+    grid-column: span 1;
+    height: 220px;
   }
-}
 
-@media (max-width: 768px) {
-  .linha-dupla {
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 600px) {
-  .linha-dupla {
-    flex-direction: column;
-    max-width: 100%;
-    gap: 15px;
+  .btn-enviar {
+    font-size: 15px;
+    padding: 12px;
   }
 }

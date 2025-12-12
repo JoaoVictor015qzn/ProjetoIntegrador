@@ -187,6 +187,27 @@ function Anuncio() {
               <div className="contador">{descricao.length} de 350</div>
             </div>
 
+            {/* Tamanho */}
+            <div className="input-group-lado">
+              <div className="input-group">
+                <label>Tamanho</label>
+                  <select>
+                      <option>Selecione</option>
+                      <option>PP</option>
+                      <option>P</option>
+                      <option>M</option>
+                      <option>G</option>
+                      <option>GG</option>
+                  </select>
+              </div>
+
+              {/* Cor */}
+              <div className="input-group">
+                <label>Cor</label>
+                <input type="text" placeholder='ex: "Azul"...' />
+              </div>
+            </div>
+
             {/* ESTADO DO PRODUTO */}
             <div className="estado-produto">
               <label>é novo?</label>

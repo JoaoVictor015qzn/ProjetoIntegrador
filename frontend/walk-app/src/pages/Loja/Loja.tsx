@@ -8,6 +8,9 @@ function Loja() {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null);
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
 
+  const [cidade, setCidade] = useState("");
+  const [uf, setUf] = useState("");
+
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -21,7 +24,15 @@ function Loja() {
   };
 
   const handleSave = () => {
-    alert("Alterações salvas! (Integração backend futura)");
+    if (!cidade.trim() || !uf.trim()) {
+    alert("Preencha a Cidade e UF antes de salvar.");
+    return;
+  }
+  alert("Alterações salvas! (Integração backend futura)");
+  };
+
+  const handleSaveR = () => {
+    alert("Seu relatório foi enviado para o seu e-mail! Confira e, se precisar de algo, estamos à disposição!");
   };
 
   const [abaAtiva, setAbaAtiva] = useState("venda");
@@ -60,7 +71,26 @@ function Loja() {
 
           <div className="info-texto">
             <h2 className="nome-loja">Nome da Loja</h2>
-            <p className="local-loja">Cidade, UF</p>
+            <div className="local-loja-inputs">
+              <input
+                type="text"
+                placeholder="Cidade"
+                value={cidade}
+                onChange={(e) => setCidade(e.target.value)}
+                className="input-local"
+                required
+              />
+
+              <input
+                type="text"
+                placeholder="UF"
+                value={uf}
+                onChange={(e) => setUf(e.target.value)}
+                className="input-local uf"
+                maxLength={2}
+                required
+              />
+            </div>
           </div>
 
           <button className="btn-salvar-loja" onClick={handleSave}>
@@ -83,7 +113,8 @@ function Loja() {
               {aba === "seguindo" && "Seguindo (0)"}
             </button>
           ))}
-          <button className="aba solicitar-relatorio">
+
+          <button className="aba solicitar-relatorio" onClick={handleSaveR}>
             Solicitar relatório
           </button>
         </div>
@@ -94,14 +125,36 @@ function Loja() {
             <div className="aba-vazia">
               <h2>Anuncie um produto</h2>
               <p>Anuncie um produto para ter novidades nessa aba.</p>
-              <Link to="/anuncio" className="btn-acao-aba">Anunciar</Link>
+              <Link
+                to={cidade && uf ? "/anuncio" : "#"}
+                className={`btn-acao-aba ${!(cidade && uf) ? "desativado" : ""}`}
+                onClick={(e) => {
+                  if (!cidade || !uf) {
+                    e.preventDefault();
+                    alert("Defina Cidade e UF antes de anunciar.");
+                  }
+                }}
+              >
+                Anunciar
+              </Link>
             </div>
           )}
           {abaAtiva === "vendidos" && (
             <div className="aba-vazia">
               <h2>Você ainda não vendeu nenhum produto</h2>
               <p>Comece anunciando algo para aparecer aqui.</p>
-              <Link to="/anuncio" className="btn-acao-aba">Anunciar</Link>
+              <Link
+                to={cidade && uf ? "/anuncio" : "#"}
+                className={`btn-acao-aba ${!(cidade && uf) ? "desativado" : ""}`}
+                onClick={(e) => {
+                  if (!cidade || !uf) {
+                    e.preventDefault();
+                    alert("Defina Cidade e UF antes de anunciar.");
+                  }
+                }}
+              >
+                Anunciar
+            </Link>
             </div>
           )}
           {["favoritos", "seguidores", "seguindo"].includes(abaAtiva) && (
