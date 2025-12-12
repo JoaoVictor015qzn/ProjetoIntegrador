@@ -1,9 +1,9 @@
 // src/components/UI/ProductGrid.tsx
-import { useState } from 'react';
-import { useCart } from '../../context/useCart';
-import { useFavorites } from '../../context/useFavorites';
-import { useSearch } from '../../context/use.Search';
-import ProductDetailsModal from '../UI/Modal';
+import { useState } from "react";
+import { useCart } from "../../context/useCart";
+import { useFavorites } from "../../context/useFavorites";
+import { useSearch } from "../../context/use.Search";
+import ProductDetailsModal from "../UI/Modal";
 
 interface Product {
   id: number;
@@ -18,105 +18,120 @@ const products: Product[] = [
     id: 1,
     nome: "Vestido curto estampado vintage",
     preco: 89.9,
-    imagem: "https://images.unsplash.com/photo-1618354691438-25bc0f0f8f29?w=400",
+    imagem:
+      "https://oqvestir.fbitsstatic.net/img/p/vestido-curto-brasil-vintage-branco-226802/660856-5.jpg?w=1600&h=2133&v=202509041642",
     categoria: "novidades",
   },
   {
     id: 2,
     nome: "Blazer feminino social marrom",
     preco: 159.9,
-    imagem: "https://images.unsplash.com/photo-1593032465171-8b09c9d57d3a?w=400",
+    imagem:
+      "https://shop2gether.fbitsstatic.net/img/p/blazer-feminino-maddie-marrom-193510/503067.jpg?w=1225&h=1633&v=no-value",
     categoria: "feminino",
   },
   {
     id: 3,
     nome: "Saia midi plissada lilás",
     preco: 99.9,
-    imagem: "https://images.unsplash.com/photo-1613553231244-2a639b7a9d1d?w=400",
+    imagem:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIl5BWqWfygTQtXSFjzvykiNFTBwjpjXpFGg&s",
     categoria: "feminino",
   },
   {
     id: 4,
     nome: "Vestido floral romântico",
     preco: 109.9,
-    imagem: "https://images.unsplash.com/photo-1589187155470-3a7a5f9a2b66?w=400",
+    imagem:
+      "https://img.ltwebstatic.com/images3_pi/2024/09/05/34/17255150348ae80e08608e839a7e8aa57d754e9184_thumbnail_750x999.jpg",
     categoria: "promocoes",
   },
   {
     id: 5,
     nome: "Camisa social branca com gravata",
     preco: 79.9,
-    imagem: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=400",
+    imagem:
+      "https://cdn.awsli.com.br/600x700/2537/2537740/produto/2450281857bbdc3fb5b.jpg",
     categoria: "masculino",
   },
   {
     id: 6,
     nome: "Camiseta banda vintage",
     preco: 69.9,
-    imagem: "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?w=400",
+    imagem:
+      "https://down-br.img.susercontent.com/file/8cd3890ebc7ba6c2808811de946daf18",
     categoria: "promocoes",
   },
   {
     id: 7,
     nome: "Short esportivo cinza",
     preco: 89.9,
-    imagem: "https://images.unsplash.com/photo-1602810318383-e386cc2a3a9b?w=400",
+    imagem:
+      "https://cdn.sistemawbuy.com.br/arquivos/ddaa0ea772456a9b1f31a54e3426ff86/produtos/686afc48ac2d3/short-academia-masculino-cinza-corrida-treino-01-686afc6c2d8ae.jpg",
     categoria: "masculino",
   },
   {
     id: 8,
     nome: "Camiseta preta com estampa",
     preco: 59.9,
-    imagem: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400",
+    imagem:
+      "https://cdn.shoppub.io/cdn-cgi/image/w=1000,h=1000,q=80,f=auto/rota34/media/uploads/produtos/foto/dsuuzanv/camiseta-preta.jpg",
     categoria: "novidades",
   },
   {
     id: 9,
     nome: "Calça jeans infantil",
     preco: 79.9,
-    imagem: "https://images.unsplash.com/photo-1602293589930-45aad59df195?w=400",
+    imagem:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTV8xM_2c26v6WgZZ6rfWHOS0OI1mkG0e4BHg&s",
     categoria: "kids",
   },
   {
     id: 10,
     nome: "Tênis esportivo branco",
     preco: 129.9,
-    imagem: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400",
+    imagem:
+      "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400",
     categoria: "calcados",
   },
   {
     id: 11,
     nome: "Bolsa de couro marrom",
     preco: 149.9,
-    imagem: "https://images.unsplash.com/photo-1566150902887-83bed9c23710?w=400",
+    imagem:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf4kYI1b963Pj917kwpaMDN_UM-kSurHxppw&s0",
     categoria: "acessorios",
   },
   {
     id: 12,
     nome: "Camiseta algodão orgânico",
     preco: 49.9,
-    imagem: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400",
+    imagem:
+      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=400",
     categoria: "tecidos",
   },
   {
     id: 13,
     nome: "Vestido infantil floral",
     preco: 69.9,
-    imagem: "https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?w=400",
+    imagem:
+      "https://cdn.awsli.com.br/545/545706/produto/215281648/vestido-de-festa-9hq27v43z2.jfif",
     categoria: "kids",
   },
   {
     id: 14,
     nome: "Óculos de sol aviador",
     preco: 89.9,
-    imagem: "https://images.unsplash.com/photo-1577803645773-f96470509666?w=400",
+    imagem:
+      "https://images.unsplash.com/photo-1577803645773-f96470509666?w=400",
     categoria: "acessorios",
   },
   {
     id: 15,
     nome: "Tecido linho natural",
     preco: 29.9,
-    imagem: "https://images.unsplash.com/photo-1584278404602-8d2e9e0b2e26?w=400",
+    imagem:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ9YoIH_73IBGBGWwxYuOmHpqdQVyA0t7KzQ&s",
     categoria: "tecidos",
   },
   {
@@ -161,7 +176,7 @@ const ProductGrid = () => {
           );
         }
 
-        // 💸 Filtro por preço máximo (ex: "50")
+        // 💸 Filtro por preço máximo
         if (maxPrice !== null) {
           catProducts = catProducts.filter((p) => p.preco <= maxPrice);
         }

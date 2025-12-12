@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/UI/Navbar";
 import Sidebar from "../../components/UI/Sidebar";
 import "./Config.css";
@@ -7,8 +8,10 @@ function Config() {
   const [openModal, setOpenModal] = useState(false);
 
   const [nomeUsuario, setNomeUsuario] = useState("");
-
   const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
+
+  const navigate = useNavigate();
 
   // --- FOTO ---
   const [fotoPreview, setFotoPreview] = useState<string>(
@@ -97,9 +100,21 @@ function Config() {
                     <input name="email" type="text" />
                   </div>
 
+                  {/* Campo de Telefone */}
                   <div className="field">
                     <label>Número de Telefone:</label>
-                    <input name="telefone" type="number" />
+                    <input
+                      name="telefone"
+                      type="text"
+                      maxLength={15}
+                      value={telefone}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^\d*$/.test(value)) {
+                          setTelefone(value);
+                        }
+                      }}
+                    />
                   </div>
 
                   <div className="field">
@@ -161,6 +176,7 @@ function Config() {
                         onClick={() => {
                           console.log("Conta excluída!");
                           setOpenModal(false);
+                          navigate("/"); 
                         }}
                       >
                         Excluir
