@@ -1,100 +1,71 @@
 import os
 import sys
+import requests
 from dotenv import load_dotenv
 from openai import OpenAI
-import psycopg2
 
 load_dotenv()
+
 API_KEY = os.getenv("OPENAI_API_KEY")
+API_URL = "http://localhost:8000/produtos"
 
 if not API_KEY:
-    print("ERRO: OPENAI_API_KEY não encontrada no .env", file=sys.stderr)
+    print("ERRO: OPENAI_API_KEY não encontrada", file=sys.stderr)
     sys.exit(1)
-
-DB_NAME = "polls"
-DB_USER = "docker"
-DB_PASSWORD = "docker"
-DB_HOST = "localhost"
-DB_PORT = "5432"
-
-def conectar_banco():
-    try:
-        conn = psycopg2.connect(
-            dbname=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            client_encoding='UTF8'
-        )
-        conn.set_client_encoding('UTF8') 
-        return conn
-    except Exception as e:
-        print("Erro ao conectar ao banco:", e, file=sys.stderr)
-        sys.exit(1)
-
-def buscar_produto(nome_produto: str):
-    conn = conectar_banco()
-    cur = conn.cursor()
-    query = """
-        SELECT nome_produto, preco, quantidade_estoque
-        FROM Produtos
-        WHERE nome_produto ILIKE %s
-          AND status = TRUE;
-    """
-    cur.execute(query, (f"%{nome_produto}%",))
-    resultados = cur.fetchall()
-    cur.close()
-    conn.close()
-    return resultados
 
 client = OpenAI(api_key=API_KEY)
 
 contexto_loja = """
 Você é o assistente virtual da Loja Walk.
-A loja vende roupas, calçados e acessórios, e pode receber/doar roupas.
-Sempre responda com informações reais da loja.
+A loja vende roupas, calçados e acessórios.
+Sempre que o usuário perguntar preço, estoque ou produto,
+use os dados reais retornados pela API.
 """
 
-def perguntar_openai(pergunta_texto: str):
+def buscar_produtos_api(nome_produto: str):
     try:
-        resp = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Você é um assistente da loja Walk."},
-                {"role": "system", "content": contexto_loja},
-                {"role": "user", "content": pergunta_texto}
-            ],
-            max_tokens=500
-        )
-        return resp.choices[0].message.content
-    except Exception as e:
-        print("Erro ao chamar API:", e, file=sys.stderr)
-        return "Chatbot: Desculpe, não consegui processar sua pergunta no momento."
+        response = requests.get(API_URL, params={"nome": nome_produto}, timeout=5)
+        response.raise_for_status()
+        return response.json()
+    except Exception:
+        return None
+
+
+def perguntar_openai(pergunta: str):
+    resp = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": contexto_loja},
+            {"role": "user", "content": pergunta}
+        ],
+        max_tokens=300
+    )
+    return resp.choices[0].message.content
+
 
 if __name__ == "__main__":
-    print("Chatbot da Loja Walk iniciado!")
+    print("🛍️ Chatbot da Loja Walk iniciado!")
     print("Digite 'sair' para encerrar.\n")
 
     while True:
         pergunta = input("Você: ").strip()
+
         if pergunta.lower() in ("sair", "exit", "quit"):
-            print("Até mais! Volte sempre!")
+            print("Até mais!")
             break
 
-        if any(palavra in pergunta.lower() for palavra in ["preço", "custa", "valor"]):
-            nome_produto = pergunta.lower()
-            for palavra in ["quanto custa", "preço de", "custa"]:
-                nome_produto = nome_produto.replace(palavra, "")
-            nome_produto = nome_produto.strip()
+        if any(p in pergunta.lower() for p in ["preço", "valor", "custa"]):
+            produtos = buscar_produtos_api(pergunta)
 
-            produtos = buscar_produto(nome_produto)
             if produtos:
                 for p in produtos:
-                    nome_produto, preco, quantidade_estoque = p
-                    print(f"Chatbot: Produto: {nome_produto} |  R${preco:.2f} |  Estoque: {quantidade_estoque}")
+                    print(
+                        f"Chatbot: {p['nome_produto']} | "
+                        f"R$ {p['preco']:.2f} | "
+                        f"Estoque: {p['quantidade_estoque']}"
+                    )
             else:
-                print("Chatbot: Não encontrei esse produto no estoque.")
+                print("Chatbot: Não encontrei esse produto.")
         else:
             resposta = perguntar_openai(pergunta)
             print("Chatbot:", resposta)
