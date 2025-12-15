@@ -1,45 +1,69 @@
-// src/pages/Entregas.tsx
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+// src/pages/Entregas/Entregas.tsx
+import { useEffect, useState } from "react";
 import Navbar from "../../components/UI/Navbar";
 import Sidebar from "../../components/UI/Sidebar";
+import api from "../../services/api";
 import "./Entregas.css";
 
-interface Pedido {
+interface Order {
   id: number;
-  loja: string;
-  status: string;
-  img: string;
-  titulo: string;
-  variacao: string;
-  qtd: number;
-  preco: number;
+  total: number;
+  createdAt: string;
+  itemsJson: string;
+  status?: string; // pode vir do backend se tiver
+}
+
+interface OrderItem {
+  ProductId: number;
+  ProductName: string;
+  Qty: number;
+  LineTotal: number;
+  // Pode adicionar imagem se tiver no backend
 }
 
 const tabs = ["Tudo", "A Pagar", "Preparando", "A caminho", "Finalizado", "Cancelado"];
 
-function Entregas() {
+const Entregas = () => {
   const [activeTab, setActiveTab] = useState("Tudo");
-  const [pedidos, setPedidos] = useState<Pedido[]>([]);
-
-  const location = useLocation();
-  const query = new URLSearchParams(location.search);
-  const pedidoId = query.get("pedido");
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock
-    setPedidos([]);
+    const fetchOrders = async () => {
+      try {
+        const data = await api.get<Order[]>("/api/orders/mine");
+        setOrders(data);
+      } catch (err) {
+        console.error("Erro ao carregar pedidos", err);
+        alert("Erro ao carregar pedidos");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
-  useEffect(() => {
-    if (pedidoId && pedidos.length > 0) {
-      const id = Number(pedidoId);
-      const pedido = pedidos.find((p) => p.id === id);
-      if (pedido) setActiveTab(pedido.status);
-    }
-  }, [pedidoId, pedidos]);
+  // Filtra por status (se o backend enviar status, use ele. Caso contrário, usa "Tudo")
+  const filteredOrders = orders.filter((order) => {
+    if (activeTab === "Tudo") return true;
+    // Se o backend não enviar status, todos vão para "Tudo"
+    return order.status === activeTab;
+  });
 
-  const pedidosFiltrados = pedidos.filter((p) => activeTab === "Tudo" || p.status === activeTab);
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="app-layout">
+          <Sidebar />
+          <div className="main-content-entregas">
+            <p className="text-center py-20 text-lg">Carregando pedidos...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -47,6 +71,8 @@ function Entregas() {
       <div className="app-layout">
         <Sidebar />
         <div className="main-content-entregas">
+          <h1 className="text-3xl font-bold mb-8 text-center">Minhas Compras</h1>
+
           <div className="tabs-container">
             {tabs.map((tab) => (
               <button
@@ -60,53 +86,79 @@ function Entregas() {
           </div>
 
           <div className="pedidos-list">
-            {pedidosFiltrados.length === 0 ? (
-              <div className="empty-state">Nenhum pedido nesta aba.</div>
+            {filteredOrders.length === 0 ? (
+              <div className="empty-state">
+                {activeTab === "Tudo"
+                  ? "Você ainda não tem pedidos."
+                  : `Nenhum pedido em "${activeTab}".`}
+              </div>
             ) : (
-              pedidosFiltrados.map((pedido) => (
-                <div key={pedido.id} className={`pedido-card ${pedido.id === Number(pedidoId) ? "highlight" : ""}`}>
-                  <div className="card-header">
-                    <div className="loja-info">
-                      <span className="tag-indicado">Indicado</span>
-                      <strong>{pedido.loja}</strong>
-                      <button className="chat-btn">Chat</button>
-                      <button className="loja-btn">Ver Loja</button>
-                    </div>
-                    <div className="status-entrega">
-                      <span>Status:</span>
-                      <span className="status-texto">{pedido.status.toUpperCase()}</span>
-                    </div>
-                  </div>
+              filteredOrders.map((order) => {
+                const items = JSON.parse(order.itemsJson) as OrderItem[];
 
-                  <div className="card-body">
-                    <img src={pedido.img} alt={pedido.titulo} />
-                    <div className="prod-detalhes">
-                      <h3>{pedido.titulo}</h3>
-                      <p>Variação: {pedido.variacao}</p>
-                      <p>x{pedido.qtd}</p>
+                return (
+                  <div key={order.id} className="pedido-card">
+                    <div className="card-header">
+                      <div className="loja-info">
+                        <span className="tag-indicado">WalkWord</span>
+                        <strong>Loja Oficial</strong>
+                        <button className="chat-btn">Chat</button>
+                        <button className="loja-btn">Ver Loja</button>
+                      </div>
+                      <div className="status-entrega">
+                        <span>Status:</span>
+                        <span className="status-texto">
+                          {order.status || "A Processar"}
+                        </span>
+                      </div>
                     </div>
-                    <div className="prod-preco">
-                      R${pedido.preco.toFixed(2).replace(".", ",")}
-                    </div>
-                  </div>
 
-                  <div className="card-footer">
-                    <div className="total-label">
-                      Total do Pedido: <span>R${pedido.preco.toFixed(2).replace(".", ",")}</span>
+                    <div className="card-body">
+                      {/* Imagem placeholder (pode melhorar com imagem real do produto) */}
+                      <div className="bg-gray-200 w-32 h-32 rounded-lg" />
+
+                      <div className="prod-detalhes">
+                        <h3>Itens do pedido</h3>
+                        <div className="space-y-2 mt-2">
+                          {items.map((item) => (
+                            <div key={item.ProductId}>
+                              <p>
+                                <strong>{item.ProductName}</strong>
+                              </p>
+                              <p>Variação: Padrão</p>
+                              <p>Quantidade: {item.Qty}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="prod-preco">
+                        R${order.total.toFixed(2).replace(".", ",")}
+                      </div>
                     </div>
-                    <div className="card-actions">
-                      <button className="comprar-novamente">Comprar Novamente</button>
-                      <button className="falar-vendedor">Falar Com Vendedor</button>
+
+                    <div className="card-footer">
+                      <div className="total-label">
+                        Total do Pedido:{" "}
+                        <span>R${order.total.toFixed(2).replace(".", ",")}</span>
+                      </div>
+                      <div className="card-actions">
+                        <button className="comprar-novamente">
+                          Comprar Novamente
+                        </button>
+                        <button className="falar-vendedor">
+                          Falar Com Vendedor
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
       </div>
     </>
   );
-}
-
+};
 export default Entregas;

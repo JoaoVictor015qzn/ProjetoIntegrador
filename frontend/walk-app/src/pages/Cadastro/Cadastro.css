@@ -52,7 +52,6 @@ form {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   background-color: #fff;
   width: 700px;
-  margin-bottom: 20px;
 }
 
 form button {
@@ -67,17 +66,13 @@ form button {
   transition: background-color 0.3s ease;
 }
 
-form button:hover {
-  background-color: #3b3e46;
-}
-
 form input {
   border-radius: 6px;
   border: 1px solid #ccc;
   height: 40px;
   background-color: #c9c5c5;
   font-size: 16px;
-  padding-left: 10px;
+  padding: 0 40px 0 10px;
   outline: none;
   width: 100%;
   transition: all 0.3s ease;
@@ -91,27 +86,18 @@ form input:focus {
 .name-group {
   display: flex;
   gap: 12px;
-  width: 100%;
-}
-
-.name-group input {
-  flex: 1;
 }
 
 .password-wrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.password-wrapper input {
   width: 100%;
-  padding-right: 30px;
 }
 
 .eye-btn {
   position: absolute;
-  right: 10px;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -120,25 +106,23 @@ form input:focus {
   padding: 0;
 }
 
+/* remove qualquer efeito estranho */
 .eye-btn,
 .eye-btn svg {
   background: transparent !important;
-  color: #646262 !important;
-  transition: none !important;
   box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
 }
 
-.eye-btn:hover,
-.eye-btn:focus,
-.eye-btn:active,
-.eye-btn svg:hover,
-.eye-btn svg:focus,
-.eye-btn svg:active {
-  background: transparent !important;
-  color: #646262 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
+/* LINKS DE BAIXO */
+.links-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.link-btn {
+  flex: 1;
+  border-radius: 10px;
+  height: 40px;
+  cursor: pointer;
 }

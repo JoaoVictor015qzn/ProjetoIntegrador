@@ -64,7 +64,6 @@ form button {
   font-weight: bold;
   cursor: pointer;
   font-size: 15px;
-  transition: background-color 0.3s ease;
 }
 
 form button:hover {
@@ -80,59 +79,11 @@ form input {
   padding-left: 10px;
   outline: none;
   width: 100%;
-  transition: all 0.3s ease;
-}
-
-form input:focus {
-  border-color: #31353c;
-  box-shadow: 0 0 8px rgba(36, 37, 36, 0.3);
 }
 
 .name-group {
   display: flex;
   gap: 12px;
-  width: 100%;
-}
-
-.name-group input {
-  flex: 1;
-}
-
-.razao-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ie-box {
-  background-color: #c7c2c2;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  width: 100%;
-}
-
-.ie-box label {
-  font-weight: 600;
-  color: #4e4d4d;
-}
-
-.ie-inner {
-  display: flex;
-  gap: 6px;
-}
-
-.ie-inner input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-
-.ie-inner span {
-  font-size: 14px;
-  color: #4e4d4d;
 }
 
 .password-wrapper {
@@ -143,7 +94,7 @@ form input:focus {
 
 .password-wrapper input {
   width: 100%;
-  padding-right: 30px;
+  padding-right: 40px;
 }
 
 .eye-btn {
@@ -154,28 +105,22 @@ form input:focus {
   cursor: pointer;
   color: #646262;
   font-size: 18px;
-  padding: 0;
 }
 
-.eye-btn,
-.eye-btn svg {
-  background: transparent !important;
-  color: #646262 !important;
-  transition: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
+.links-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.eye-btn:hover,
-.eye-btn:focus,
-.eye-btn:active,
-.eye-btn svg:hover,
-.eye-btn svg:focus,
-.eye-btn svg:active {
-  background: transparent !important;
-  color: #646262 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  filter: none !important;
+.link-btn {
+  background: transparent;
+  border: none;
+  color: #31353c;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.link-btn.secondary {
+  color: #555;
 }

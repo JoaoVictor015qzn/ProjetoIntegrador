@@ -27,7 +27,7 @@ services:
   chatbot:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: DockerFile
     container_name: chatbot_openai
     env_file:
       - ./backend/WalkWord.ChatBot/.env

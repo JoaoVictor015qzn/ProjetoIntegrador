@@ -1,59 +1,89 @@
-// src/pages/FavoritesPage/FavoritesPage.tsx (página completa de favoritos)
-import Navbar from '../../components/UI/Navbar';
-import { useFavorites } from '../../context/useFavorites';
-import { useState } from 'react';
-import ProductDetailsModal from '../../components/UI/Modal';  // Use o caminho correto (ajuste se for '../../components/UI/Modal')
+// src/pages/Favoritos/Favoritos.tsx
+import { useFavorites } from "../../context/useFavorites";
+import Navbar from "../../components/UI/Navbar";
+import ProductDetailsModal from "../../components/UI/Modal"; // ajuste o caminho se necessário
+import { useState } from "react";
 
-import type { FavoriteItem } from '../../context/FavoritesContext';  // Importe o tipo FavoriteItem se necessário (caso não esteja acessível)
+interface FavoriteProduct {
+  id: number;
+  nome: string;
+  preco: number;
+  imagem: string;
+}
 
-const FavoritesPage = () => {
+const Favoritos = () => {
   const { favorites, removeFromFavorites } = useFavorites();
-  const [selectedProduct, setSelectedProduct] = useState<FavoriteItem | null>(null);  // Adicione o tipo aqui: FavoriteItem | null
+  const [selectedProduct, setSelectedProduct] = useState<FavoriteProduct | null>(null);
 
-  const openModal = (item: typeof favorites[0]) => {  // Tipo já correto
-    setSelectedProduct(item);
+  const handleRemove = (id: number) => {
+    removeFromFavorites(id);
+    alert("Produto removido dos favoritos ❤️");
   };
 
-  const closeModal = () => {
-    setSelectedProduct(null);
+  const handleOpenModal = (product: FavoriteProduct) => {
+    setSelectedProduct(product);
   };
-
-  if (favorites.length === 0) {
-    return (
-      <div className="min-h-screen bg-white">
-        <Navbar />
-        <div className="p-8 text-center">
-          <h1 className="text-3xl font-bold mb-4 text-black">Seus Favoritos</h1>
-          <p className="text-black">Você ainda não adicionou itens aos seus favoritos.</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       <Navbar />
-      <div className="p-8">
-        <h1 className="text-3xl font-bold mb-4 text-black">Seus Favoritos</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {favorites.map((item) => (
-            <div key={item.id} className="border p-4 rounded-lg shadow">
-              <img
-                src={item.imagem}
-                alt={item.nome}
-                className="w-full h-64 object-cover mb-2 rounded cursor-pointer"
-                onClick={() => openModal(item)}
-              />
-              <p className="font-bold">{item.nome}</p>
-              <p>R${item.preco.toFixed(2)}</p>
-              <button onClick={() => removeFromFavorites(item.id)} className="mt-2 text-red-500">Remover</button>
+      <div className="min-h-screen bg-gray-50 pt-20">
+        <div className="max-w-7xl mx-auto px-8">
+          <h1 className="text-4xl font-bold text-center mb-12">Seus Favoritos</h1>
+
+          {favorites.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-2xl text-gray-600 mb-4">Você ainda não tem favoritos ❤️</p>
+              <p className="text-gray-500">Volte para a home e clique no coração dos produtos que você gosta!</p>
             </div>
-          ))}
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {favorites.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white border rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden relative cursor-pointer"
+                  onClick={() => handleOpenModal(product)}
+                >
+                  {/* Botão remover favoritos (lixeira ou coração vazio) */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRemove(product.id);
+                    }}
+                    className="absolute top-4 right-4 z-10 p-2 bg-white rounded-full shadow-md hover:shadow-lg transition"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="red" stroke="red" strokeWidth="2">
+                      <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+
+                  <div className="bg-gray-200 h-64 w-full" />
+
+                  <div className="p-4">
+                    <h3 className="font-bold text-lg truncate">{product.nome}</h3>
+                    <p className="text-2xl font-bold text-green-600 mt-4">
+                      R${product.preco.toFixed(2)}
+                    </p>
+
+                    <button className="mt-4 w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition">
+                      Adicionar ao Carrinho
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-      {selectedProduct && <ProductDetailsModal product={selectedProduct} onClose={closeModal} />}
-    </div>
+
+      {selectedProduct && (
+        <ProductDetailsModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+    </>
   );
 };
 
-export default FavoritesPage;
+export default Favoritos;

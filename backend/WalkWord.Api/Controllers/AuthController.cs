@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WalkWord.Api.DTOs.Auth;
 using WalkWord.Api.Services;
@@ -6,6 +7,7 @@ namespace WalkWord.Api.Controllers
 {
     [ApiController]
     [Route("api/auth")]
+    [AllowAnonymous] // ← ESSENCIAL: permite acesso público a login/register
     public class AuthController : ControllerBase
     {
         private readonly UserService _users;
@@ -20,11 +22,11 @@ namespace WalkWord.Api.Controllers
             try
             {
                 var res = await _users.RegisterAsync(dto);
-                return Created("", res); // 201
+                return Created("", res); // 201 Created
             }
             catch (InvalidOperationException ex)
             {
-                return Conflict(ex.Message); // 409
+                return Conflict(ex.Message); // 409 Email já existe
             }
         }
 
@@ -36,7 +38,7 @@ namespace WalkWord.Api.Controllers
             var res = await _users.LoginAsync(dto);
             if (res is null) return Unauthorized("Email ou senha inválidos.");
 
-            return Ok(res);
+            return Ok(res); // 200 OK com token
         }
     }
 }

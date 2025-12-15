@@ -6,6 +6,6 @@ COPY WalkWord.ChatBot/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY WalkWord.ChatBot/ .
 
 CMD ["python", "chatbot.py"]
