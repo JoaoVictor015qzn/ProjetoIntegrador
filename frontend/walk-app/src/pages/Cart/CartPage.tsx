@@ -1,36 +1,151 @@
 // src/pages/Cart/CartPage.tsx
-import Navbar from '../../components/UI/Navbar';
-import { useCart } from '../../context/useCart';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import Navbar from "../../components/UI/Navbar";
+import { useNavigate } from "react-router-dom";
+import { Trash2 } from "lucide-react";
 
-type CartItem = {
-  id: number;
-  nome: string;
-  preco: number;
-  quantidade: number;
-  imagem?: string;
-  tamanho?: string;
-  cor?: string;
-};
+interface CartItemView {
+  productId: number;
+  productName: string;
+  qty: number;
+  unitPrice: number;
+  lineTotal: number;
+}
+
+interface CartResponse {
+  items: CartItemView[];
+  total: number;
+}
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const { cart, removeFromCart, updateQuantity, getTotal } = useCart();
 
-  // subtotal por item
-  const getItemSubtotal = (item: CartItem) => {
-    return item.preco * item.quantidade;
+  const [cart, setCart] = useState<CartResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [updating, setUpdating] = useState<number | null>(null); // item sendo atualizado
+
+  const getErrorMessage = (err: unknown) => {
+    if (err instanceof Error) return err.message;
+    return String(err);
   };
 
-  // desconto opcional
-  const desconto = 0.05;
-  const totalComDesconto = getTotal() * (1 - desconto);
+  const fetchCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/");
+        return;
+      }
 
-  const handleContinueToDelivery = () => {
-    navigate('/checkout/delivery');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cart`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) throw new Error("Erro ao carregar carrinho");
+
+      const data: CartResponse = await res.json();
+      setCart(data);
+    } catch (err: unknown) {
+      setError(getErrorMessage(err) || "Erro ao carregar carrinho");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  if (cart.length === 0) {
+  useEffect(() => {
+    fetchCart();
+  }, [navigate]);
+
+  const updateQuantity = async (productId: number, qty: number) => {
+    if (qty < 1) return; // não permite menor que 1
+    setUpdating(productId);
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      await fetch(`${import.meta.env.VITE_API_URL}/api/cart/items`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ productId, qty }),
+      });
+
+      // Atualiza estado local imediatamente
+      setCart((prev) =>
+        prev
+          ? {
+              ...prev,
+              items: prev.items.map((i) =>
+                i.productId === productId
+                  ? { ...i, qty, lineTotal: i.unitPrice * qty }
+                  : i
+              ),
+              total: prev.items.reduce((sum, i) =>
+                i.productId === productId ? sum + i.unitPrice * qty : sum + i.lineTotal
+              , 0),
+            }
+          : null
+      );
+    } catch (err: unknown) {
+      alert(getErrorMessage(err) || "Erro ao atualizar item");
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const removeItem = async (productId: number) => {
+    setUpdating(productId);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      await fetch(`${import.meta.env.VITE_API_URL}/api/cart/items/${productId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Atualiza estado local removendo o item
+      setCart((prev) =>
+        prev
+          ? {
+              ...prev,
+              items: prev.items.filter((i) => i.productId !== productId),
+              total: prev.items
+                .filter((i) => i.productId !== productId)
+                .reduce((sum, i) => sum + i.lineTotal, 0),
+            }
+          : null
+      );
+    } catch (err: unknown) {
+      alert(getErrorMessage(err) || "Erro ao remover item");
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100">
+        <Navbar />
+        <p className="p-8 text-center text-lg">Carregando carrinho...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100">
+        <Navbar />
+        <p className="p-8 text-center text-red-600">{error}</p>
+      </div>
+    );
+  }
+
+  if (!cart || cart.items.length === 0) {
     return (
       <div className="min-h-screen bg-white">
         <Navbar />
@@ -42,12 +157,13 @@ const CartPage = () => {
     );
   }
 
+  const desconto = cart.total * 0.05;
+  const totalComDesconto = cart.total - desconto;
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="p-8 max-w-7xl mx-auto">
-
-        {/* Barra de progresso */}
         <div className="flex justify-between items-center mb-8 border-b pb-4 text-gray-600 text-sm md:text-base">
           <span className="font-bold text-black">Carrinho</span>
           <span>Entrega</span>
@@ -55,90 +171,91 @@ const CartPage = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-
-          {/* Lista de itens */}
           <div className="md:col-span-2 space-y-6">
             <h2 className="text-2xl font-bold mb-6 text-black">Itens no Carrinho</h2>
 
-            {cart.map((item) => (
-              <div key={item.id} className="flex items-center gap-4 pb-4 border-b last:border-0">
-                <img src={item.imagem} alt={item.nome} className="w-20 h-24 object-cover rounded" />
-
+            {cart.items.map((item) => (
+              <div
+                key={item.productId}
+                className="flex items-center gap-6 bg-white p-6 rounded-xl shadow-md"
+              >
+                <div className="bg-gray-200 w-28 h-32 rounded-lg" />
                 <div className="flex-1">
-                  <p className="font-medium">{item.nome}</p>
-                  {item.tamanho && <p className="text-sm text-gray-600">Tamanho: {item.tamanho}</p>}
-                  {item.cor && <p className="text-sm text-gray-600">Cor: {item.cor}</p>}
+                  <h3 className="font-semibold text-xl">{item.productName}</h3>
+                  <p className="text-gray-600 mt-1">
+                    Preço unitário: R${item.unitPrice.toFixed(2)}
+                  </p>
 
-                  <div className="flex items-center gap-3 mt-3">
+                  <div className="flex items-center gap-4 mt-4">
+                    {/* BOTÃO DE MENOS */}
                     <button
-                      onClick={() => updateQuantity(item.id, Math.max(1, item.quantidade - 1))}
-                      className="w-8 h-8 border rounded text-gray-600 hover:bg-gray-100"
+                      onClick={() => updateQuantity(item.productId, item.qty - 1)}
+                      className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition font-bold text-lg"
+                      disabled={item.qty <= 1 || updating === item.productId}
                     >
                       -
                     </button>
 
-                    <span>{item.quantidade}</span>
+                    <span className="text-xl font-bold w-12 text-center">{item.qty}</span>
 
+                    {/* BOTÃO DE MAIS */}
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantidade + 1)}
-                      className="w-8 h-8 border rounded text-gray-600 hover:bg-gray-100"
+                      onClick={() => updateQuantity(item.productId, item.qty + 1)}
+                      className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition font-bold text-lg"
+                      disabled={updating === item.productId}
                     >
                       +
                     </button>
 
+                    {/* LIXEIRA */}
                     <button
-                      onClick={() => removeFromCart(item.id)}
-                      className="ml-auto text-red-500 hover:underline"
+                      onClick={() => removeItem(item.productId)}
+                      className="ml-auto text-red-600 hover:text-red-800 transition"
+                      title="Remover item"
+                      disabled={updating === item.productId}
                     >
-                      Remover
+                      <Trash2 size={24} />
                     </button>
                   </div>
                 </div>
 
-                <p className="font-semibold">
-                  R${getItemSubtotal(item).toFixed(2)}
-                </p>
+                <div className="text-right">
+                  <p className="text-2xl font-bold text-green-600">
+                    R${item.lineTotal.toFixed(2)}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Resumo */}
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4 text-black">Resumo</h2>
+          {/* RESUMO DO PEDIDO */}
+          <div className="bg-white p-8 rounded-xl shadow-lg h-fit">
+            <h2 className="text-2xl font-bold mb-6 text-black">Resumo do Pedido</h2>
 
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-sm">
+            <div className="space-y-4 mb-8">
+              <div className="flex justify-between text-lg">
                 <span>Subtotal</span>
-                <span>R${getTotal().toFixed(2)}</span>
+                <span>R${cart.total.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between text-sm text-green-600">
+              <div className="flex justify-between text-lg text-green-600">
                 <span>Desconto PIX (5%)</span>
-                <span>-R${(getTotal() * 0.05).toFixed(2)}</span>
+                <span>-R${desconto.toFixed(2)}</span>
               </div>
 
-              <div className="flex justify-between text-lg font-bold">
-                <span>Total</span>
+              <div className="flex justify-between text-2xl font-bold pt-4 border-t">
+                <span>Total a pagar</span>
                 <span>R${totalComDesconto.toFixed(2)}</span>
               </div>
             </div>
 
-            <p className="text-xs text-gray-500 mb-6 cursor-pointer hover:underline">
-              Adicionar cupom de desconto
-            </p>
-
-            <button
-              onClick={handleContinueToDelivery}
-              className="w-full bg-black text-white py-4 rounded-md hover:bg-gray-900 uppercase font-bold text-lg"
-            >
+            <button onClick={() => navigate("/checkout/delivery")} className="w-full bg-black text-white py-5 rounded-xl font-bold text-xl hover:bg-gray-900 uppercase">
               Continuar
             </button>
           </div>
-
         </div>
       </div>
     </div>
   );
 };
-
 export default CartPage;

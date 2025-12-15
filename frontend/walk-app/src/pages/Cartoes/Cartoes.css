@@ -34,7 +34,7 @@
   color: #414040;
 }
 
-/* Modal */
+/* --- Estilos do Modal --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -51,22 +51,67 @@
 .modal {
   background: white;
   padding: 25px;
-  width: 600px;
+  width: 450px; 
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  /* Propriedades para organizar os campos em coluna */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaço entre os grupos de campos */
 }
 
 .modal h3 {
   margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 }
 
-.modal-row {
+/* NOVO: Grupo de campo (Rótulo + Input) - Cada um ocupa a linha toda */
+.modal-field-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+}
+
+/* NOVO: Estilo do Rótulo */
+.modal-field-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.95em;
+}
+
+/* Estilo base para todos os inputs do modal (usando a classe 'modal-input') */
+.modal-input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%; /* Garante que ocupe o espaço disponível */
+    box-sizing: border-box; 
+}
+
+.modal-input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Linha para Validade e CVV (usa a classe 'fields-split' para dividir) */
+.modal-row.fields-split {
   display: flex;
   gap: 15px;
-  margin-bottom: 15px;
+  /* Não precisa de margin-bottom, pois o gap do .modal gerencia o espaçamento */
 }
 
+/* O .modal-field-group dentro da linha split deve dividir o espaço */
+.modal-row.fields-split .modal-field-group {
+    flex: 1; /* Faz com que cada campo (validade e cvv) ocupe 50% da linha */
+}
+
+/* OBSERVAÇÃO: Esta regra antiga de input dentro de .modal-row é neutralizada pela nova estrutura */
 .modal-row input {
+  /* Não deve ter efeito, pois os inputs usam agora .modal-input */
   flex: 1;
   padding: 12px;
   border: 1px solid #ddd;
@@ -109,6 +154,16 @@
   align-items: center;
 }
 
+.card-box h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.card-box p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
 /* Botão de deletar */
 .delete-btn {
   position: absolute;
@@ -123,6 +178,11 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  transition: opacity 0.2s;
+}
+
+.delete-btn:hover {
+    opacity: 0.8;
 }
 
 @media (max-width: 768px) {
@@ -146,14 +206,13 @@
     width: 95% !important;
     max-height: 90vh;
     overflow-y: auto;
+    gap: 10px;
   }
 
-  .modal-row {
-    flex-direction: column;
-  }
-
-  .modal-row input {
-    width: 100%;
+  /* Mudança: Campos Validade/CVV devem ficar um abaixo do outro em mobile */
+  .modal-row.fields-split {
+     flex-direction: column;
+     gap: 10px;
   }
 
   .cards-list {
@@ -166,8 +225,6 @@
   }
 
   .delete-btn {
-    left: 0;
-    align-self: flex-end;
-    margin-top: -5px;
+     /* Mantém a posição original se houver espaço */
   }
 }

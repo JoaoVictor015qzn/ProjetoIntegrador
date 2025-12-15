@@ -1,36 +1,36 @@
-/* eslint-disable react-refresh/only-export-components */  // Desabilita a regra ESLint para este arquivo
-
 // src/context/FavoritesContext.tsx
-import { createContext, useState } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+
+import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 
-export interface FavoriteItem {
+interface FavoriteItem {
   id: number;
   nome: string;
   preco: number;
   imagem: string;
 }
 
-export interface FavoritesContextType {
+interface FavoritesContextType {
   favorites: FavoriteItem[];
   addToFavorites: (item: FavoriteItem) => void;
   removeFromFavorites: (id: number) => void;
 }
 
-export const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
+const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
 
   const addToFavorites = (item: FavoriteItem) => {
     setFavorites((prev) => {
-      if (prev.find((i) => i.id === item.id)) return prev;
+      if (prev.some((f) => f.id === item.id)) return prev; // já existe
       return [...prev, item];
     });
   };
 
   const removeFromFavorites = (id: number) => {
-    setFavorites((prev) => prev.filter((item) => item.id !== id));
+    setFavorites((prev) => prev.filter((f) => f.id !== id));
   };
 
   return (
@@ -39,3 +39,13 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     </FavoritesContext.Provider>
   );
 };
+
+export const useFavorites = (): FavoritesContextType => {
+  const context = useContext(FavoritesContext);
+  if (!context) {
+    throw new Error('useFavorites must be used within a FavoritesProvider');
+  }
+  return context;
+};
+
+export { FavoritesContext };

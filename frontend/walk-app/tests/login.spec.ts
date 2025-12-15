@@ -2,6 +2,19 @@ import { test, expect } from "@playwright/test";
 
 const URL = "http://localhost:5173/";
 
+test("login e acesso ao carrinho", async ({ page }) => {
+  await page.goto("http://localhost:5173/");
+
+  await page.fill('input[placeholder="E-mail"]', "teste@test.com");
+  await page.fill('input[placeholder="Senha"]', "123456");
+  await page.click('button:has-text("Entrar")');
+
+  await page.waitForURL("**/home");
+
+  await page.click('a[title="Carrinho"]');
+  await expect(page).toHaveURL(/.*carrinho/);
+});
+
 test("alerta quando email ou senha estão vazios", async ({ page }) => {
   await page.goto(URL);
 

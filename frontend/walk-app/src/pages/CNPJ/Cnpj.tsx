@@ -1,98 +1,159 @@
 import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./Cnpj.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Walk from "../../assets/Walk.png";
+import "./Cnpj.css";
 
-function CNPJ() {
+const API_URL = import.meta.env.VITE_API_URL;
+
+const Cnpj = () => {
+  const [nomeFantasia, setNomeFantasia] = useState("");
+  const [cnpj, setCnpj] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  const togglePassword = () => setShowPassword(!showPassword);
-  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const handleRegister = async () => {
+    if (senha !== confirmarSenha) {
+      alert("As senhas não coincidem 😭");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: nomeFantasia,
+          email,
+          password: senha,
+          cnpj,
+          role: "PJ",
+        }),
+      });
+
+      if (!res.ok) throw new Error();
+
+      const data = await res.json();
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userId", data.userId.toString());
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: data.userId,
+          name: data.name,
+          email: data.email,
+          role: "PJ",
+        })
+      );
+
+      navigate("/home");
+    } catch {
+      alert("Erro ao criar conta da empresa");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
       <nav>
-        <img src={Walk} alt="Logo" />
+        <img src={Walk} alt="Logo" onClick={() => navigate("/")} />
         <span>Roupas sustentáveis e com melhor qualidade!</span>
       </nav>
 
       <div className="container">
         <form>
-          <h1>Cadastro Empresa</h1>
+          <h1>Criar Conta Empresa</h1>
 
-          {/* Nome Fantasia e CNPJ */}
           <div className="name-group">
-            <input placeholder="Nome Fantasia" name="nomef" type="text" />
+            <input
+              placeholder="Nome Fantasia"
+              value={nomeFantasia}
+              onChange={(e) => setNomeFantasia(e.target.value)}
+            />
             <input
               placeholder="CNPJ"
-              name="cnpj"
-              type="text"
-              maxLength={18}
-              inputMode="numeric"
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
             />
           </div>
 
-          {/* Razão Social e IE */}
-          <div className="razao-group">
-            <input placeholder="Razão Social" name="razaos" type="text" />
-            <div className="ie-box">
-              <label>IE</label>
-              <div className="ie-inner">
-                <input name="isento" type="checkbox" id="isento" />
-                <span>Isento</span>
-              </div>
-            </div>
-          </div>
+          <input
+            placeholder="Email corporativo"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-          {/* Email */}
-          <input placeholder="Email" name="email" type="email" />
-
-          {/* Senha */}
+          {/* SENHA */}
           <div className="password-wrapper">
             <input
               placeholder="Senha"
-              name="senha"
               type={showPassword ? "text" : "password"}
-            />
-            <button type="button" className="eye-btn" onClick={togglePassword}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-
-          {/* Confirmar Senha */}
-          <div className="password-wrapper">
-            <input
-              placeholder="Confirmar Senha"
-              name="confirmasenha"
-              type={showConfirmPassword ? "text" : "password"}
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
             />
             <button
               type="button"
               className="eye-btn"
-              onClick={toggleConfirmPassword}
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+
+          {/* CONFIRMAR SENHA */}
+          <div className="password-wrapper">
+            <input
+              placeholder="Confirmar senha"
+              type={showConfirmPassword ? "text" : "password"}
+              value={confirmarSenha}
+              onChange={(e) => setConfirmarSenha(e.target.value)}
+            />
+            <button
+              type="button"
+              className="eye-btn"
+              onClick={() => setShowConfirmPassword((prev) => !prev)}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
 
-          {/* Botões */}
-          <button type="button" onClick={() => navigate("/")}>
-            Criar Conta</button>
-
-          <button type="button" onClick={() => navigate("/")}>
-            Voltar para Login
+          <button type="button" onClick={handleRegister} disabled={loading}>
+            {loading ? "Criando conta..." : "Criar Conta Empresa"}
           </button>
 
-          <button type="button" onClick={() => navigate("/cadastro")}>
-            Cadastrar como Pessoa Física
-          </button>
+          {/* LINKS */}
+          <div className="links-row">
+            <button
+              type="button"
+              className="link-btn"
+              onClick={() => navigate("/")}
+            >
+              Já tem conta? Fazer login
+            </button>
+
+            <button
+              type="button"
+              className="link-btn secondary"
+              onClick={() => navigate("/cadastro")}
+            >
+              Cadastrar como Pessoa Física
+            </button>
+          </div>
         </form>
       </div>
     </>
   );
-}
-
-export default CNPJ;
+};
+export default Cnpj;

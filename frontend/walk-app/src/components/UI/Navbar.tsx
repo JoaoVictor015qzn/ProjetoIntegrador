@@ -10,9 +10,7 @@ export default function Navbar() {
   const { cart } = useCart();
   const { favorites } = useFavorites();
 
-  // Quantidade total no carrinho
   const cartCount = cart.reduce((total, item) => total + item.quantidade, 0);
-  // Quantidade de favoritos
   const favoritesCount = favorites.length;
 
   const handleScrollToSection = (sectionId: string) => {
@@ -45,12 +43,10 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-6 text-gray-700">
-          {/* Configurações */}
           <Link to="/config" title="Configurações">
             <Settings className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>
 
-          {/* Favoritos com bolinha vermelha + número */}
           <Link to="/favoritos" title="Favoritos" className="relative inline-block">
             <Heart className="cursor-pointer hover:text-green-600 w-6 h-6" />
             {favoritesCount > 0 && (
@@ -60,7 +56,6 @@ export default function Navbar() {
             )}
           </Link>
 
-          {/* Carrinho com bolinha vermelha + número */}
           <Link to="/carrinho" title="Carrinho" className="relative inline-block">
             <ShoppingCart className="cursor-pointer hover:text-green-600 w-6 h-6" />
             {cartCount > 0 && (
@@ -70,7 +65,6 @@ export default function Navbar() {
             )}
           </Link>
 
-          {/* Login */}
           <Link to="/" title="Entrar">
             <User className="cursor-pointer hover:text-green-600 w-6 h-6" />
           </Link>

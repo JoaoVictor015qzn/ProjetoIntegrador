@@ -1,4 +1,4 @@
-// src/pages/Loja.tsx
+// src/pages/Loja/Loja.tsx
 import { useState } from "react";
 import Navbar from "../../components/UI/Navbar";
 import "./Loja.css";
@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 function Loja() {
   const [bannerPreview, setBannerPreview] = useState<string | null>(null);
   const [fotoPreview, setFotoPreview] = useState<string | null>(null);
-
   const [cidade, setCidade] = useState("");
   const [uf, setUf] = useState("");
+  const [abaAtiva, setAbaAtiva] = useState("venda");
 
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -25,24 +25,17 @@ function Loja() {
 
   const handleSave = () => {
     if (!cidade.trim() || !uf.trim()) {
-    alert("Preencha a Cidade e UF antes de salvar.");
-    return;
-  }
-  alert("Alterações salvas! (Integração backend futura)");
+      alert("Preencha a Cidade e UF antes de salvar.");
+      return;
+    }
+    alert("Alterações salvas com sucesso!");
   };
-
-  const handleSaveR = () => {
-    alert("Seu relatório foi enviado para o seu e-mail! Confira e, se precisar de algo, estamos à disposição!");
-  };
-
-  const [abaAtiva, setAbaAtiva] = useState("venda");
 
   return (
     <>
       <Navbar />
 
       <div className="loja-container">
-        {/* Banner */}
         <div
           className="banner-loja"
           style={{
@@ -55,7 +48,6 @@ function Loja() {
           </label>
         </div>
 
-        {/* Infos */}
         <div className="info-loja-container">
           <div className="foto-wrapper">
             <img
@@ -80,7 +72,6 @@ function Loja() {
                 className="input-local"
                 required
               />
-
               <input
                 type="text"
                 placeholder="UF"
@@ -98,7 +89,6 @@ function Loja() {
           </button>
         </div>
 
-        {/* Abas */}
         <div className="abas-loja">
           {["venda", "vendidos", "favoritos", "seguidores", "seguindo"].map((aba) => (
             <button
@@ -113,54 +103,19 @@ function Loja() {
               {aba === "seguindo" && "Seguindo (0)"}
             </button>
           ))}
-
-          <button className="aba solicitar-relatorio" onClick={handleSaveR}>
+          <button className="aba solicitar-relatorio">
             Solicitar relatório
           </button>
         </div>
 
-        {/* Conteúdo */}
         <div className="conteudo-aba">
           {abaAtiva === "venda" && (
             <div className="aba-vazia">
               <h2>Anuncie um produto</h2>
               <p>Anuncie um produto para ter novidades nessa aba.</p>
-              <Link
-                to={cidade && uf ? "/anuncio" : "#"}
-                className={`btn-acao-aba ${!(cidade && uf) ? "desativado" : ""}`}
-                onClick={(e) => {
-                  if (!cidade || !uf) {
-                    e.preventDefault();
-                    alert("Defina Cidade e UF antes de anunciar.");
-                  }
-                }}
-              >
+              <Link to="/anuncio" className="btn-acao-aba">
                 Anunciar
               </Link>
-            </div>
-          )}
-          {abaAtiva === "vendidos" && (
-            <div className="aba-vazia">
-              <h2>Você ainda não vendeu nenhum produto</h2>
-              <p>Comece anunciando algo para aparecer aqui.</p>
-              <Link
-                to={cidade && uf ? "/anuncio" : "#"}
-                className={`btn-acao-aba ${!(cidade && uf) ? "desativado" : ""}`}
-                onClick={(e) => {
-                  if (!cidade || !uf) {
-                    e.preventDefault();
-                    alert("Defina Cidade e UF antes de anunciar.");
-                  }
-                }}
-              >
-                Anunciar
-            </Link>
-            </div>
-          )}
-          {["favoritos", "seguidores", "seguindo"].includes(abaAtiva) && (
-            <div className="aba-vazia">
-              <h2>{abaAtiva === "favoritos" ? "Nenhum produto favoritado" : abaAtiva === "seguidores" ? "Nenhum seguidor ainda" : "Você não está seguindo ninguém"}</h2>
-              <p>{abaAtiva === "favoritos" ? "Os produtos que você favoritar aparecerão aqui." : abaAtiva === "seguidores" ? "Quando alguém seguir sua loja, aparecerá aqui." : "As lojas que você seguir aparecerão aqui."}</p>
             </div>
           )}
         </div>
@@ -168,5 +123,4 @@ function Loja() {
     </>
   );
 }
-
 export default Loja;
