@@ -1,0 +1,127 @@
+# Relatório de Progresso do Projeto
+
+## Visão Geral
+
+Este relatório apresenta o estado atual de desenvolvimento do projeto,
+listando os itens já realizados e destacando **as pendências que
+precisam ser concluídas** para garantir o funcionamento completo da
+aplicação.
+
+------------------------------------------------------------------------
+
+## Funcionalidades Concluídas
+
+-   Estrutura base do backend criada.
+-   Rotas iniciais configuradas.
+-   Ambiente de desenvolvimento configurado.
+
+------------------------------------------------------------------------
+
+## Pendências do Projeto
+
+A seguir estão as **funcionalidades que ainda precisam ser desenvolvidas
+e integradas**, agora descritas de forma mais detalhada para
+documentação técnica e acompanhamento no GitHub.
+
+### 1. Integração do Chatbot com o Banco de Dados
+
+-   Definir o modelo de dados necessário para o chatbot (logs, perguntas
+    frequentes, respostas salvas, feedback do usuário).
+-   Criar tabelas ou coleções específicas para armazenar conversas ou
+    registros importantes.
+-   Implementar camada de serviço no backend para intermediar
+    requisições do chatbot ao banco.
+-   Permitir que o chatbot consulte dados persistidos, como histórico ou
+    configurações.
+-   Criar endpoints para suporte a treinamento manual do chatbot, caso
+    necessário.
+
+### 2. Desenvolvimento da Tela de Administrador
+
+-   Criar layout responsivo para o painel administrativo.
+-   Implementar sistema de autenticação exclusivo para administradores.
+-   Criar dashboards com métricas básicas (total de usuários, produtos
+    cadastrados, acessos, etc.).
+-   Implementar gerenciamento de usuários: criação, edição, remoção e
+    bloqueio.
+-   Implementar gerenciamento de produtos: criação, edição, desativação,
+    remoção.
+-   Integrar os dados da interface com as rotas do backend.
+
+### 3. Integração do Back-end com o Front-end
+
+-   Configurar camada de consumo de API no front-end utilizando Axios ou
+    Fetch.
+-   Criar serviços reutilizáveis para login, registro, CRUD de produtos
+    e usuários.
+-   Implementar tratamento de erros no front (toasts, alerts, modais,
+    logs).
+-   Criar fluxo de autenticação persistente usando JWT e armazenamento
+    seguro (localStorage ou cookies).
+-   Garantir que rotas protegidas no front bloqueiem usuários não
+    autenticados.
+
+### 4. Integração do Back-end com o Banco de Dados
+
+-   Definir os modelos e entidades no backend com base nos requisitos do
+    projeto.
+-   Criar e validar migrations para gerar todas as tabelas necessárias.
+-   Implementar repositórios ou serviços responsáveis por comunicação
+    direta com o banco.
+-   Adicionar manipulação de erros para evitar falhas silenciosas.
+-   Criar testes básicos para validar conexão e operações fundamentais.
+
+### 5. Implementação do CRUD de Produtos
+
+-   Criar modelos de produto com campos obrigatórios (nome, descrição,
+    preço, quantidade, categoria, status, imagem, etc.).
+-   Implementar rotas de criação (POST), listagem (GET), atualização
+    (PUT/PATCH) e exclusão (DELETE).
+-   Validar dados de entrada no backend utilizando DTOs ou validações
+    nativas.
+-   Integrar as rotas com páginas específicas do front-end.
+-   Criar interface para exibição, edição e exclusão de produtos.
+-   Adicionar paginação e filtros (opcional).
+
+### 6. Implementação do CRUD de Usuários
+
+-   Criar modelo de usuário com campos como nome, email, senha
+    criptografada, nível de acesso, status.
+-   Implementar rotas responsáveis por operações de gerenciamento.
+-   Proteger rotas usando middleware de autenticação e autorização.
+-   Garantir que apenas administradores possam alterar dados sensíveis.
+-   Criar telas no front para administração de usuários.
+-   Integrar todo o fluxo com o banco de dados.
+
+------------------------------------------------------------------------
+
+## Próximos Passos
+
+1.  Finalizar integração back-end ↔ banco de dados.
+2.  Implementar CRUDs principais (usuários e produtos).
+3.  Integrar autenticador JWT com front-end.
+4.  Desenvolver painel administrativo.
+5.  Implementar persistência do chatbot.
+
+------------------------------------------------------------------------
+
+## Status Geral
+
+O projeto encontra-se em desenvolvimento, com vários módulos estruturais
+prontos, mas ainda exige integrações essenciais e construção de
+funcionalidades completas. A continuidade do desenvolvimento seguirá as
+prioridades descritas acima.
+
+------------------------------------------------------------------------
+
+## Porcentagem de Conclusão
+1. Aplicação Backend - 50%
+2. Aplicação Frontend - 80%
+3. Integração Front + Back - 0%
+4. Testes Automatizado - 0%
+5. Mineração de Dados Aplicada - 50%
+6. Uso do banco de Dados - 80%
+7. Requisitos Funcionais - 50%
+8. User Stories - 60%
+9. Diagrama de Caso de Uso - 60%
+10. Artigo Cientifico - 0%

@@ -1,0 +1,363 @@
+/* ================= LAYOUT GERAL ================= */
+.app-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  padding-top: 0px;
+  box-sizing: border-box;
+}
+
+.main-content-wrapper {
+  flex: 1;
+  margin-left: 0px !important; 
+  justify-content: flex-start;
+  margin-top: -50px;
+  padding-left: 0px !important;
+  padding-right: 370px;
+  padding-top: 0px;
+}
+
+/* ================= FORMULÁRIO ================= */
+form {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border: none;
+  flex: 1;
+}
+
+h1.page-title {
+  font-family: sans-serif;
+  font-weight: 750;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 28px;
+}
+
+.perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.field label {
+  width: 180px;
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.field input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  color: #000;
+  font-size: 14px;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #000;
+}
+
+input[type="number"] {
+  appearance: textfield;  
+  -webkit-appearance: none;  
+  -moz-appearance: textfield; 
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ================= BOTÃO SALVAR ================= */
+.save-btn {
+  width: 250px;         
+  padding: 10px ;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto 0;     
+  display: block;
+  transition: 0.2s;
+  background-color: #31353c;
+}
+
+.save-btn:hover {
+  background-color: #3b3e46;
+}
+
+.saved-msg {
+  margin-top: 10px;
+  color: #4caf50;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ================= BOTÃO EXCLUIR CONTA ================= */
+.excluir-conta {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.excluir-conta button {
+  width: 250px;
+  background-color: rgb(163, 6, 6);
+  color: white;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.excluir-conta button:hover {
+  background-color: darkred;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 22px;
+  border-radius: 10px;
+  width: 340px;
+  text-align: center;
+}
+
+.modal-box h2 {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel {
+  background: #ccc;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 75px;
+}
+
+.confirm {
+  background: red;
+  font-weight: 600;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.confirm:hover {
+  background: darkred;
+}
+
+/* ================= RADIOS ================= */
+
+.radios {
+  display: flex;
+  gap: 100px; 
+  align-items: center;
+  flex: 1;
+}
+
+.radios .radio-option {
+  width: auto !important; 
+  text-align: left !important; 
+  font-weight: 500 !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+
+/* ================= SEÇÃO PERFIL ================= */
+.perfil-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 90%;
+  max-width: 650px; /* valor ideal pra não esmagar a sidebar */
+  gap: 9px;
+}
+
+.perfil-form {
+  flex: 1;
+}
+
+/* FOTO DIREITA */
+.profile-photo-section {
+  margin-top: 50px;
+  width: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.profile-photo-wrapper {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.select-photo-btn {
+  padding: 8px 16px;
+  background-color: #f3f3f3;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.select-photo-btn:hover {
+  background-color: #e7e7e7;
+}
+
+/* ====================== RESPONSIVIDADE ====================== */
+@media (max-width: 768px) {
+
+  .perfil-container {
+    flex-direction: column !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    gap: 10px !important;
+    padding: 0 16px !important;
+  }
+
+  .main-content-wrapper {
+    padding-right: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  /* FORM EM COLUNA */
+  .field {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .field label {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  .field input {
+    width: 100% !important;
+  }
+
+  /* RADIOS */
+  .radios {
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .radio-option {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  /* FOTO */
+  .profile-photo-section {
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 10px !important;
+  }
+
+  .profile-photo-wrapper {
+    width: 140px !important;
+    height: 140px !important;
+  }
+}
+
+/* MOBILE AJUSTE REAL */
+@media (max-width: 768px) {
+  .main-content-wrapper {
+    padding-right: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  .perfil-container {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 16px !important;
+  }
+
+  form {
+    width: 100% !important;
+  }
+
+  .field {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .field label {
+    width: 100% !important;
+    text-align: left !important;
+  }
+
+  .profile-photo-section {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+}

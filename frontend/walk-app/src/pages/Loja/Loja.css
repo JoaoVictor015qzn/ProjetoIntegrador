@@ -1,0 +1,195 @@
+.loja-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 80px;
+}
+
+/* Banner */
+.banner-loja {
+  width: 100%;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  position: relative;
+  margin-bottom: 80px;
+}
+
+.editar-banner {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(255,255,255,0.9);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.editar-banner input { display: none; }
+
+/* Info Loja */
+.info-loja-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: -60px 0 40px;
+  padding: 0 20px;
+}
+
+.foto-wrapper {
+  position: relative;
+}
+
+.foto-perfil-loja {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.editar-foto {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.editar-foto input { display: none; }
+
+.info-texto {
+  flex: 1;
+  min-width: 200px;
+}
+
+.nome-loja {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.local-loja {
+  font-size: 16px;
+  color: #555;
+}
+
+.btn-salvar-loja {
+  background: #000;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: bold;
+}
+
+/* Inputs de Cidade e UF */
+.local-loja-inputs {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.input-local {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.input-local:focus {
+  border-color: #000;
+}
+
+.input-local.uf {
+  width: 70px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Abas */
+.abas-loja {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 2px solid #eee;
+  padding: 0 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.abas-loja::-webkit-scrollbar { display: none; }
+
+.aba {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #666;
+  white-space: nowrap;
+}
+
+.aba.ativa {
+  color: #000;
+  font-weight: 600;
+  border-bottom: 3px solid #000;
+}
+
+.solicitar-relatorio {
+  background: #f0f0f0;
+  border-radius: 50px;
+  margin-left: auto;
+}
+
+/* Conteúdo */
+.conteudo-aba {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.aba-vazia h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.aba-vazia p {
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.btn-acao-aba {
+  background: #000;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  .banner-loja { height: 200px; margin-bottom: 100px; }
+  .info-loja-container { flex-direction: column; align-items: center; text-align: center; margin-top: -80px; }
+  .foto-perfil-loja { width: 100px; height: 100px; }
+  .nome-loja { font-size: 24px; }
+  .btn-salvar-loja { width: 100%; max-width: 300px; }
+  .abas-loja { justify-content: center; }
+  .conteudo-aba { padding: 30px 10px; }
+}
+
+@media (max-width: 480px) {
+  .banner-loja { height: 180px; }
+  .foto-perfil-loja { width: 80px; height: 80px; }
+  .nome-loja { font-size: 20px; }
+}

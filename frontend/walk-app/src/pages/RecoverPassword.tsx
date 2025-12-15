@@ -24,6 +24,7 @@ const RecoverPassword = () => {
           <h1>Esqueceu sua senha?</h1>
           <p>Insira o e-mail cadastrado para receber o link de recuperação.</p>
 
+
           <input
             type="email"
             placeholder="Digite seu e-mail"
@@ -34,7 +35,7 @@ const RecoverPassword = () => {
 
           <button type="submit">Enviar link</button>
 
-          <Link to="/login" className="back-link">
+          <Link to="/" className="back-link">
             Voltar para o login
           </Link>
         </form>

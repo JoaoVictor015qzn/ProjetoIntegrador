@@ -19,8 +19,27 @@
   }
 }
 
-body {
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto !important;
+  min-height: 100%;
+  overflow-y: auto !important;
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+#root,
+.app-container {
+  min-height: 100% !important;
+  height: auto !important;
+}
+
+section {
+  min-height: auto !important;
 }

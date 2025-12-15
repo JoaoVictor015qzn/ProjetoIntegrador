@@ -1,120 +1,139 @@
-/* Container principal */
+/* CONTAINER PRINCIPAL */
 .login-container {
   display: flex;
+  height: 100vh;
   width: 100%;
-  height: 100%;
 }
 
-/* Lado esquerdo com fundo escuro e logo */
+/* LADO ESQUERDO */
 .login-left {
   flex: 1;
-  background: linear-gradient(135deg, #1a1a1a, #333);
+  background: #000;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 2rem;
 }
 
 .login-left img {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  max-width: 400px;
+  height: auto;
 }
 
-/* Lado direito com formulário */
+/* LADO DIREITO */
 .login-right {
-  flex: 1;
-  background-color: #fff;
+  flex: 1.2;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.login-right form {
-  width: 720px; 
-  display: flex;
-  flex-direction: column;
-  padding: 60px; 
+  padding: 2rem;
   background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.login-right h2 {
-  margin-bottom: 30px;
-  color: #333;
+.login-form {
+  width: 100%;
+  max-width: 420px;
   text-align: center;
-  font-size: 22px;
-  font-weight: 600;
 }
 
-.login-right h1 {
-    margin-bottom: 100px;
-  color: #333;
-  text-align: center;
-  font-size: 53px;
-  font-weight: 600;
-}
-
-/* Select e inputs */
-.login-right select,
-.login-right input {
-  margin-bottom: 18px;
-  padding: 14px 16px; 
-  font-size: 15px; 
+/* CAMPOS */
+.input-field {
+  width: 100%;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  outline: none;
-  transition: all 0.2s ease-in-out;
+  margin-bottom: 15px;
+  font-size: 15px;
 }
 
-.login-right select:focus,
-.login-right input:focus {
-  border-color: #666;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+/* SENHA */
+.password-wrapper {
+  position: relative;
+  width: 100%;
 }
 
-/* Link de esquecimento de senha */
-.login-right .forgot {
-  font-size: 14px; 
-  color: #555;
+.eye-btn {
+  position: absolute;
+  right: 12px;
+  top: 37%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* LINKS */
+.forgot {
   text-decoration: none;
-  margin-bottom: 25px;
-  align-self: flex-end;
+  font-size: 14px;
+  color: #333;
+  display: block;
+  margin-bottom: 20px;
 }
 
-.login-right .forgot:hover {
-  text-decoration: underline;
-}
-
-/* Botão de login */
-.login-right button {
-  background-color: #333;
+/* BOTÃO LOGIN */
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #1f1f22;
   color: #fff;
   border: none;
-  padding: 14px; 
-  border-radius: 12px; 
-  cursor: pointer;
+  border-radius: 10px;
   font-weight: bold;
+  cursor: pointer;
   margin-bottom: 20px;
-  transition: all 0.2s ease-in-out;
 }
 
-.login-right button:hover {
-  background-color: #555;
-  transform: translateY(-2px);
+/* TEXTO FINAL */
+.signup-link {
+  font-size: 14px;
 }
 
-/* Link de cadastro */
-.login-right .signup-link {
-  font-size: 15px;
-  text-align: center;
+/* ------ RESPONSIVIDADE ------ */
+
+/* Telas menores (tablets) */
+@media (max-width: 900px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left {
+    height: 35vh;
+  }
+
+  .login-right {
+    height: 65vh;
+  }
+
+  .login-left img {
+    width: 50%;
+  }
 }
 
-.login-right .signup-link a {
-  color: #333;
-  text-decoration: none;
-  font-weight: 600;
-}
+/* Celulares */
+@media (max-width: 600px) {
+  .login-left {
+    height: 30vh;
+  }
 
-.login-right .signup-link a:hover {
-  text-decoration: underline;
+  .login-left img {
+    width: 60%;
+  }
+
+  .login-right {
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .input-field {
+    font-size: 14px;
+  }
+
+  .login-btn {
+    padding: 10px;
+  }
 }
